@@ -1,6 +1,7 @@
 html,
 body {
     height: 100%;
+    background-color: rgb(246,246,246);
 }
 
 .wrap {
@@ -8,10 +9,6 @@ body {
     height: auto;
     margin: 0 auto -60px;
     padding: 0 0 60px;
-}
-
-.wrap > .container {
-    padding: 70px 15px 20px;
 }
 
 .footer {
@@ -112,4 +109,49 @@ a.desc:after {
 
 .nav > li > form > button.logout:focus {
     outline: none;
+}
+.body-content{
+    margin-top:30px;
+}
+.border-b{
+    border-bottom: 1px solid #b7b7b7;
+}
+.body-content .back-f{
+    background-color: #fff;
+    margin:0px 15px 10px 10px;
+    height: 305px;
+}
+.body-content p img{
+   padding-top:15px;
+}
+.body-content .h-title{
+    height:50px;
+}
+.body-content .h-title a{
+    color:#666;
+    text-decoration:none;
+    font-family:"宋体";
+    font-size: 12px;
+}
+.body-content .h-title a:hover{
+    color:red;
+    text-decoration:none;
+    font-family: 'Varela Round', arial;
+    font-size: 12px;
+}
+.body-content .price-t{
+    color:red;
+    border-top:1px solid #000;
+    padding:10px 0px;
+}
+.body-content .cart-t a{
+    color:#666;
+    text-decoration:none;
+    font-family:"宋体";
+    font-size: 12px;
+}
+.body-content .cart-t{
+    border:1px solid #a6e1ec;
+    padding:5px 5px;
+    text-align:center;
 }
