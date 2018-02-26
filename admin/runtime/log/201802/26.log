@@ -1,0 +1,94 @@
+[ 2018-02-26T09:27:33+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.tpadmin.com/admin/index/index.html [运行时间：1.677571s][吞吐率：0.60req/s] [内存消耗：5,171.01kb] [文件加载：75]
+[ info ] [ LANG ] D:\xampp\htdocs\tpAdmin-master\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tpadmin.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9,zh-HK;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; PHPSESSID=2pn1ra406jg18qkfklaj39fab4',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run \app\common\behavior\WebLog @module_init [ RunTime:0.501846s ]
+[ info ] [ RUN ] app\admin\controller\Index->index[ D:\xampp\htdocs\tpAdmin-master\application\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] D:\xampp\htdocs\tpAdmin-master\public/../application/admin\view\index\index.html [ array (
+  0 => 'groups',
+  1 => 'menu',
+) ]
+[ info ] [ RUN ] app\admin\widget\Index->menu[ D:\xampp\htdocs\tpAdmin-master\application\admin\widget\Index.php ]
+[ info ] [ RUN ] app\admin\widget\Index->menu[ D:\xampp\htdocs\tpAdmin-master\application\admin\widget\Index.php ]
+[ info ] [ RUN ] app\admin\widget\Index->menu[ D:\xampp\htdocs\tpAdmin-master\application\admin\widget\Index.php ]
+[ info ] [ RUN ] app\admin\widget\Index->menu[ D:\xampp\htdocs\tpAdmin-master\application\admin\widget\Index.php ]
+[ info ] [ RUN ] app\admin\widget\Index->menu[ D:\xampp\htdocs\tpAdmin-master\application\admin\widget\Index.php ]
+[ info ] [ RUN ] app\admin\widget\Index->menu[ D:\xampp\htdocs\tpAdmin-master\application\admin\widget\Index.php ]
+[ info ] [ RUN ] app\admin\widget\Index->menu[ D:\xampp\htdocs\tpAdmin-master\application\admin\widget\Index.php ]
+[ info ] [ RUN ] app\admin\widget\Index->menu[ D:\xampp\htdocs\tpAdmin-master\application\admin\widget\Index.php ]
+[ info ] [ RUN ] app\admin\widget\Index->menu[ D:\xampp\htdocs\tpAdmin-master\application\admin\widget\Index.php ]
+[ info ] [ RUN ] app\admin\widget\Index->menu[ D:\xampp\htdocs\tpAdmin-master\application\admin\widget\Index.php ]
+[ info ] [ RUN ] app\admin\widget\Index->menu[ D:\xampp\htdocs\tpAdmin-master\application\admin\widget\Index.php ]
+[ info ] [ RUN ] app\admin\widget\Index->menu[ D:\xampp\htdocs\tpAdmin-master\application\admin\widget\Index.php ]
+[ info ] [ RUN ] app\admin\widget\Index->menu[ D:\xampp\htdocs\tpAdmin-master\application\admin\widget\Index.php ]
+[ info ] [ RUN ] app\admin\widget\Index->menu[ D:\xampp\htdocs\tpAdmin-master\application\admin\widget\Index.php ]
+[ info ] [ RUN ] app\admin\widget\Index->menu[ D:\xampp\htdocs\tpAdmin-master\application\admin\widget\Index.php ]
+[ info ] [ RUN ] app\admin\widget\Index->menu[ D:\xampp\htdocs\tpAdmin-master\application\admin\widget\Index.php ]
+[ info ] [ RUN ] app\admin\widget\Index->menu[ D:\xampp\htdocs\tpAdmin-master\application\admin\widget\Index.php ]
+[ info ] [ RUN ] app\admin\widget\Index->menu[ D:\xampp\htdocs\tpAdmin-master\application\admin\widget\Index.php ]
+[ info ] [ RUN ] app\admin\widget\Index->menu[ D:\xampp\htdocs\tpAdmin-master\application\admin\widget\Index.php ]
+[ info ] [ RUN ] app\admin\widget\Index->menu[ D:\xampp\htdocs\tpAdmin-master\application\admin\widget\Index.php ]
+[ info ] [ RUN ] app\admin\widget\Index->menu[ D:\xampp\htdocs\tpAdmin-master\application\admin\widget\Index.php ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.004787s ] mysql:dbname=tpadmin_source;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `book_admin_node` [ RunTime:0.076495s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`name`,`group_id`,`title`,`type` FROM `book_admin_node` WHERE  (  status=1 AND group_id > 0 ) [ RunTime:0.004172s ]
+[ sql ] [ EXPLAIN : array (
+  'id' => 1,
+  'select_type' => 'SIMPLE',
+  'table' => 'book_admin_node',
+  'type' => 'ALL',
+  'possible_keys' => 'status,group_id',
+  'key' => NULL,
+  'key_len' => NULL,
+  'ref' => NULL,
+  'rows' => 60,
+  'extra' => 'Using where',
+) ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `book_admin_group` [ RunTime:0.136079s ]
+[ sql ] [ SQL ] SELECT `id`,`name`,`icon` FROM `book_admin_group` WHERE  `id` IN (1,2)  AND `status` = 1 ORDER BY sort asc,id asc [ RunTime:0.003209s ]
+[ sql ] [ EXPLAIN : array (
+  'id' => 1,
+  'select_type' => 'SIMPLE',
+  'table' => 'book_admin_group',
+  'type' => 'range',
+  'possible_keys' => 'PRIMARY',
+  'key' => 'PRIMARY',
+  'key_len' => '2',
+  'ref' => NULL,
+  'rows' => 2,
+  'extra' => 'Using where; Using filesort',
+) ]
+[ warn ] SQL:SELECT `id`,`name`,`icon` FROM `book_admin_group` WHERE  `id` IN (:where_id_in_0,:where_id_in_4)  AND `status` = :where_status ORDER BY sort asc,id asc [Using where; Using filesort]
+[ error ] [HY000]SQLSTATE[HY000]: General error: 1168 Unable to open underlying table which is differently defined or of non-MyISAM type or doesn't exist[D:\xampp\htdocs\tpAdmin-master\thinkphp\library\think\db\connector\Mysql.php:65]
+
+---------------------------------------------------------------
