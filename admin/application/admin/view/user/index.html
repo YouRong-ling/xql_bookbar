@@ -1,0 +1,72 @@
+{extend name="template/base" /}
+{block name="content"}
+<div class="page-container">
+    <form class="mb-20" id="myform" method="get" action="{:\\think\\Url::build($Request.action)}">
+        <div class="formControls col-xs-4">
+            关键字：
+            <div class="select-box" style="width: 100px">
+                <select class="select db-table" name="ktype" id="ktype">
+                    <option value="">请选择</option>
+                    <option value="1">用户名</option>
+                    <option value="2">真实姓名</option>
+                    <option value="3">手机号</option>
+                    <option value="4">身份证号</option>
+                </select>
+            </div>
+            <input type="text" placeholder="关键词" class="input-text" style="width:130px" placeholder="" name="kword" value="{$Request.param.kword}">
+        </div>
+        <button type="button" class="btn btn-success search" urls="{:\\think\\Url::build($Request.action)}"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+        <button class="btn btn-success excel" type="button"><i class="Hui-iconfont">&#xe644;</i>导出Excel</button>
+    </form>
+    <table class="table table-border table-bordered table-hover table-bg mt-20 table_fixed1">
+        <thead>
+        <tr class="text-c">
+            <th width="25"><input type="checkbox" value="" name=""></th>
+            <th width="45">用户ID</th>
+            <th width="80"><i class="Hui-iconfont">&#xe60d;</i> 用户名</th>
+            <th width="60">真实姓名</th>
+            <th width="80"><i class="Hui-iconfont">&#xe6a3;</i> 手机号</th>
+            <th width="80">邮箱</th>
+            <th width="80">状态</th>
+            <th width="90"><i class="Hui-iconfont">&#xe690;</i> 注册时间</th>
+            <th width="90"><i class="Hui-iconfont">&#xe690;</i> 最后登录时间</th>
+            <th width="50">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="list" id="vo"}
+        <tr class="text-c">
+            <td><input type="checkbox" name="pm_id[]" value="{$vo.pm_id}"></td>
+            <td>{$vo.id|high_light=$Request.param.id}</td>
+            <td>{$vo.username|high_light=$Request.param.username}</td>
+            <td>{$vo.realname|high_light=$Request.param.realname}</td>
+            <td>{$vo.mobile|high_light=$Request.param.mobile}</td>
+            <td>{$vo.email}</td>
+            <td>{:cTime($vo['reg_time'])}</td>
+            <td>{:cTime($vo['last_login_time'])}</td>
+            <td><a class="btn btn-success size-MINI radius mr-5" href="javascript:;" onclick="layer_open('查看账户详情', 'view?pm_uid={$vo.id}', {confirm:false})">查看</a></td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+    <div class="page-bootstrap">{$page}</div>
+    <div id="markdown" class="mt-20"></div>
+</div>
+{/block}
+{block name="script"}
+<script>
+    $(function () {
+        //默认选中
+        $("[name='ktype']").find("[value='{$Request.param.ktype}']").attr("selected", true);
+        //查询表单提交
+        $('.search').on('click',function(){
+            $("#myform").attr('action','index');
+            $("#myform").submit();   //jquery 提交表单
+        });
+        //导出表单提交
+        $('.excel').on('click',function() {
+            $("#myform").attr('action', 'excel').submit();   //jquery 提交表单
+        });
+    });
+</script>
+{/block}

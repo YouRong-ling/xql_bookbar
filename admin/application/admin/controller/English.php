@@ -25,7 +25,9 @@ class English
  *
  *    above 在。。上面  超过 above all 尤其 最重要的是 above sb"s bend 力所不及
  *
- *    abuse 虐待 
+ *    abuse 虐待
+ *
+ *    monday tusday  wednesday thurdday friday satursday sunday
  *
  **/
 
