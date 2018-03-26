@@ -29,7 +29,7 @@ class File extends Model
                 "original" => isset($data['name']) ? $data['name'] : '',
                 "type"     => isset($data['type']) ? $data['type'] : '',
                 "size"     => isset($data['size']) ? $data['size'] : 0,
-                "mtime"    => time(),
+                "add_time"    => time(),
             ]
         );
     }

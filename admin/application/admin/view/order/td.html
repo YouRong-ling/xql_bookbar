@@ -1,6 +1,7 @@
 <td><input type="checkbox" name="id[]" value="{$vo.id}"></td>
 <td>{$vo.id}</td>
-<td>{$vo.title|high_light=$Request.param.name}</td>
+<td>{$vo.username|high_light=$Request.param.username}</td>
+<td>{$vo.product_name|high_light=$Request.param.product_name}</td>
 <td>{:model('Type')->typeInfo($vo.type)}</td>
 <td>{$vo.price}</td>
 <td>{$vo.sale_price}</td>
