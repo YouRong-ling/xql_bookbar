@@ -11,6 +11,7 @@
 namespace app\common\model;
 
 use think\Model;
+use think\Db;
 
 class File extends Model
 {
@@ -32,5 +33,16 @@ class File extends Model
                 "add_time"    => time(),
             ]
         );
+    }
+
+    /**
+     * @param id
+     * @return string
+     */
+    public function name($id){
+        if(empty($id))
+            return "";
+        $file = Db::name('file')->field('id,name,domain')->where('id',$id)->find();
+        return $file['domain'].$file['name'];
     }
 }

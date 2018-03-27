@@ -67,6 +67,7 @@ class Product extends Controller
 
             return ajax_return_adv('添加成功');
         } else {
+            $this->view->assign("vo", 1);
             $type = Db::name('type')->field('id,title')->where('status',1)->select();
             $this->view->assign('type',$type);
             // 添加

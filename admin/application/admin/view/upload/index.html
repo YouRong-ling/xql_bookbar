@@ -89,7 +89,7 @@
             },
             done: function (e, data) {
                 layer.close(layer_msg);
-                callback(callbackId,data.result.data.name);
+                callback(callbackId,data.result.data);
             }
         });
         $('#drag').bind('drop dragover', function (e) {
@@ -194,7 +194,8 @@
         if (window.parent.frames.length == 0){
             layer.alert('请在弹层中打开此页');
         } else {
-            parent.document.getElementById(id).value = value;
+            parent.document.getElementById(id).value = value.name;
+            parent.document.getElementById('img').value = value.file_id;
             layer_close();
         }
     }

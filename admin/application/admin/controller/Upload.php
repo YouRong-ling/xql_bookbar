@@ -29,24 +29,28 @@ class Upload extends Controller
     public function upload()
     {
         $file = $this->request->file('file');
+
         $path = ROOT_PATH . 'public/tmp/uploads/';
         $info = $file->move($path);
+
         if (!$info) {
             return ajax_return_error($file->getError());
         }
-        $data = $this->request->root() . '/tmp/uploads/' . $info->getSaveName();
+        $data =  $this->request->root() .'/tmp/uploads/' . $info->getSaveName();
+        $name =  'http://www.tpadmin.com/tmp/uploads/' . $info->getSaveName();
         $insert = [
-            'cate'     => 3,
+            'cate'     => 1,
             'name'     => $data,
             'original' => $info->getInfo('name'),
-            'domain'   => '',
+            'domain'   => 'http://www.tpadmin.com',
             'type'     => $info->getInfo('type'),
             'size'     => $info->getInfo('size'),
-            'mtime'    => time(),
+            'add_time'    => time(),
         ];
-        Db::name('File')->insert($insert);
 
-        return ajax_return(['name' => $data]);
+        $id = Db::name('File')->insertGetId($insert);
+
+        return ajax_return(['name' => $name,'file_id'=>$id]);
     }
 
     /**
@@ -59,7 +63,7 @@ class Upload extends Controller
         $name = ROOT_PATH . 'public/tmp/uploads/' . get_random();
         $name = \File::downloadImage($url, $name);
 
-        $ret = $this->request->root() . '/tmp/uploads/' . basename($name);
+        $ret = 'http://www.tpadmin.com/tmp/uploads/' . basename($name);
 
         return ajax_return(['url' => $ret], '抓取成功');
     }
@@ -73,7 +77,7 @@ class Upload extends Controller
         if ($this->request->param('count')) {
             $ret['count'] = Db::name('File')->where('cate=3')->count();
         }
-        $ret['list'] = Db::name('File')->where('cate=3')->field('id,name,original')->page($page, 10)->select();
+        $ret['list'] = Db::name('File')->where('cate=1')->field('id,name,original')->page($page, 10)->select();
 
         return ajax_return($ret);
     }
