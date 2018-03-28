@@ -66,7 +66,6 @@ trait Controller
         if ($this->request->isAjax()) {
             // 插入
             $data = $this->request->except(['id']);
-
             // 验证
             if (class_exists($validateClass = Loader::parseClass(Config::get('app.validate_path'), 'validate', $controller))) {
                 $validate = new $validateClass();
@@ -102,6 +101,7 @@ trait Controller
             return ajax_return_adv('添加成功');
         } else {
             // 添加
+            $this->view->assign("vo", 1);
             return $this->view->fetch(isset($this->template) ? $this->template : 'edit');
         }
     }

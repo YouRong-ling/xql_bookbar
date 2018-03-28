@@ -1,0 +1,105 @@
+{extend name="template/base" /}
+{block name="content"}
+<div class="page-container">
+    <form class="mb-30" method="get" action="{:\\think\\Url::build($Request.action)}">
+        <div class="formControls col-xs-3">
+            渠道号：
+            <div class="select-box" style="width: 125px">
+                <select class="select db-table" name="fb_type" id="fb_type">
+                    <option value="">全部</option>
+                    {volist name="fb_type" id="v"}
+                    <option value="{$key}">{$v}</option>
+                    {/volist}
+                </select>
+            </div>
+        </div>
+        <div class="formControls col-xs-2">
+            位置：
+            <div class="select-box" style="width: 85px">
+                <select class="select db-table" name="fb_place" id="fb_place">
+                    <option value="">全部</option>
+                    <option value="1">首页</option>
+                </select>
+            </div>
+        </div>
+        <div class="formControls col-xs-2">
+            状态：
+            <div class="select-box" style="width: 85px">
+                <select class="select db-table" name="fb_status" id="fb_status">
+                    <option value="">全部</option>
+                    <option value="1">已处理</option>
+                    <option value="2">未处理</option>
+                </select>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+    </form>
+    <div class="Huialert Huialert-success">反馈意见<span class="r pt-5 pr-5">共有数据 ：<strong>{$count}</strong> 条</span></div>
+    <table class="table table-border table-bordered table-hover table-bg table_fixed">
+        <thead>
+        <tr class="text-c">
+            <th width="20">ID</th>
+            <th><i class="Hui-iconfont">&#xe60d;</i> 称呼</th>
+            <th><i class="Hui-iconfont">&#xe6a3;</i> 联系方式</th>
+            <th>所属平台</th>
+            <th>位置</th>
+            <th>反馈意见</th>
+            <th>状态</th>
+            <th><i class="Hui-iconfont">&#xe692;</i> 创建时间</th>
+            <th>备注反馈</th>
+            <th>备注时间</th>
+            <th width="80">备注人</th>
+            <th width="100">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="list" id="vo"}
+        <tr class="text-c">
+            <td>{$vo.fb_id}</td>
+            <td>{$vo.fb_name}</td>
+            <td>{$vo.fb_mobile}</td>
+            <td>{:model('FeedBack')->fbType($vo.fb_type)}</td>
+            <td>{:model('FeedBack')->fbPlace($vo.fb_place)}</td>
+            <td>{$vo.fb_content}</td>
+            <td>{eq name="vo.fb_status" value="0"}未处理{else/}已处理{/eq}</td>
+            <td>{:cTime($vo.fb_create_time)}</td>
+            <td>{$vo.fb_status_content|htmlspecialchars}</td>
+            <td>{:cTime($vo.fb_status_time)}</td>
+            <td>{:model('FeedBack')->adminUsername($vo.fb_admin_uid)}</td>
+            <td>{eq name="vo.fb_status" value="0"}
+                <a class="btn btn-primary-outline size-MINI radius" href="javascript:;" onclick="layer_open('回复', 'status?fb_id={$vo.fb_id}', {confirm:true})">处理意见</a>
+                <a class="btn btn-danger size-MINI radius" href="javascript:;" onclick="refund('del?fb_id={$vo.fb_id}', {confirm:true})">删除</a>
+                {/eq}
+            </td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+    <div class="page-bootstrap"> {$page}</div>
+</div>
+{/block}
+{block name='script'}
+<script>
+
+    $(function () {
+        //默认选中
+        $("[name='fb_type']").find("[value='{$Request.param.fb_type}']").attr("selected", true);
+        $("[name='fb_place']").find("[value='{$Request.param.fb_place}']").attr("selected", true);
+        $("[name='fb_status']").find("[value='{$Request.param.fb_status}']").attr("selected", true);
+    });
+
+    function table_fixed(selector,width) {
+        $obj = $(selector);
+        //未设置宽度自动获取width属性的宽
+        if (typeof width === "undefined"){
+            width = 0;
+            $obj.find("tr:first th").each(function () {
+                width += parseInt($(this).attr("width") || $(this).innerWidth());
+            })
+        }
+        $obj.css({"width":width+"px","table-layout":"fixed"});
+        $obj.wrap('<div style="width:100%;overflow:auto"></div>');
+    }
+    table_fixed('.table_fixed');
+</script>
+{/block}

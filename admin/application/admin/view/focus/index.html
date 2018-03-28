@@ -1,0 +1,127 @@
+{extend name="template/base" /}
+{block name="content"}
+<div class="page-container">
+    <!--<form class="mb-20" id="myform" method="get" action="{:\\think\\Url::build($Request.action)}">-->
+        <!--<div class="formControls col-xs-2">-->
+            <!--渠道：-->
+            <!--<div class="select-box" style="width: 100px">-->
+                <!--<select class="select size-S db-table" name="ad_channel" id="ad_channel">-->
+                    <!--<option value="">全部</option>-->
+                    <!--{volist name="configChannel" id="v" key="k"}-->
+                        <!--<option value="{$k}">{$v}</option>-->
+                    <!--{/volist}-->
+                <!--</select>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="formControls col-xs-3">-->
+            <!--区域：-->
+            <!--<div class="select-box" style="width: 120px">-->
+                <!--<select class="select size-S db-table" name="ad_type" id="ad_type">-->
+                    <!--<option value="">全部</option>-->
+                    <!--{volist name="configType" id="v" key="k"}-->
+                        <!--<option value="{$k}">{$v}</option>-->
+                    <!--{/volist}-->
+                <!--</select>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="formControls col-xs-2">-->
+        <!--位置：-->
+        <!--<div class="select-box" style="width: 85px">-->
+            <!--<select class="select size-S db-table" name="ad_place" id="ad_place">-->
+                <!--<option value="">全部</option>-->
+                <!--{volist name="configPlace" id="v" key="k"}-->
+                    <!--<option value="{$k}">{$v}</option>-->
+                <!--{/volist}-->
+            <!--</select>-->
+        <!--</div>-->
+        <!--</div>-->
+
+        <!--<button type="button" class="btn btn-success search" urls="{:\\think\\Url::build($Request.action)}"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>-->
+        <!--&lt;!&ndash;<button class="btn btn-success excel" type="button"><i class="Hui-iconfont">&#xe644;</i>导出Excel</button>&ndash;&gt;-->
+    <!--</form>-->
+    <div class="cl pd-5 bg-1 bk-gray">
+        <span class="l">
+            {tp:menu menu='add' /}
+        </span>
+        <span class="r pt-5 pr-5">
+            共有数据 ：<strong>{$count}</strong> 条
+        </span>
+    </div>
+    <table class="table table-border table-bordered table-hover table-bg mt-20 table_fixed1">
+        <thead>
+        <tr class="text-c">
+            <th width="25"><input type="checkbox" value="" name=""></th>
+            <th width="45">ID</th>
+            <th width="80">广告名称</th>
+            <th width="60">图片</th>
+            <th width="130">链接</th>
+            <th width="80">开始时间</th>
+            <th width="80">结束时间</th>
+            <th width="60">广告渠道</th>
+            <th width="60">位置</th>
+            <th width="60">子位置</th>
+            <th width="90"><i class="Hui-iconfont">&#xe690;</i> 创建时间</th>
+            <td width="25">状态</td>
+            <th width="50">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="list" id="vo"}
+        <tr class="text-c">
+            <td><input type="checkbox" name="id[]" value="{$vo.id}"></td>
+            <td>{$vo.id|high_light=$Request.param.id}</td>
+            <td>{$vo.ad_name}</td>
+            <td><a href="{:model('Focus')->getImgUrlById($vo['ad_img_key'])}" target="_blank" ><img class="Preview"  style="height: 120px;width: 220px;" src="{:model('Focus')->getImgUrlById($vo['ad_img_key'])}"  alt="" /></a></td>
+            <td><a href="{$vo.ad_url}" target="_blank" >{$vo.ad_url|high_light=$Request.param.ad_url}</a></td>
+            <td>{$vo['ad_start_time']}</td>
+            <td>{$vo['ad_end_time']}</td>
+            <td>{:model('Focus')->getChannel($vo['ad_channel'])}</td>
+            <td>{:model('Focus')->getType($vo['ad_type'])}</td>
+            <td>{:model('Focus')->getPlace($vo['ad_place'])}</td>
+            <td>{$vo['create_time']}</td>
+            <td>{$vo.status|get_status}</td>
+            <td>
+                {$vo.status|show_status=$vo.id}
+                {tp:menu menu='sedit,sdelete' /}
+            </td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+    <div class="page-bootstrap">{$page}</div>
+    <div id="markdown" class="mt-20"></div>
+</div>
+{/block}
+{block name="script"}
+<script>
+    $(function () {
+        //默认选中
+        $("[name='ad_channel']").find("[value='{$Request.param.ad_channel}']").attr("selected", true);
+        $("[name='ad_type']").find("[value='{$Request.param.ad_type}']").attr("selected", true);
+        $("[name='ad_place']").find("[value='{$Request.param.ad_place}']").attr("selected", true);
+        $("[name='pm_status']").find("[value='{$Request.param.pm_status}']").attr("selected", true);
+
+        //查询表单提交
+        $('.search').on('click',function(){
+            var url = $(this).attr('urls');
+            $("#myform").attr('action',url);
+            $("#myform").submit();   //jquery 提交表单
+        });
+    });
+    function table_fixed(selector,width) {
+        $obj = $(selector);
+        //未设置宽度自动获取width属性的宽
+        if (typeof width === "undefined"){
+            width = 0;
+            $obj.find("tr:first th").each(function () {
+                width += parseInt($(this).attr("width") || $(this).innerWidth());
+            })
+        }
+        $obj.css({"width":width+"px","table-layout":"fixed"});
+        $obj.wrap('<div style="width:100%;overflow:auto"></div>');
+    }
+    table_fixed('.table_fixed');
+</script>
+{/block}

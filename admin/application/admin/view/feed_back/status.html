@@ -1,0 +1,37 @@
+{extend name="template/base" /}
+{block name="content"}
+<div class="page-container">
+    <form class="mb-20" id="Form">
+        <table class="table">
+            <div class="Huialert Huialert-info">回复意见</div>
+            <tbody>
+            <tr>
+                <td><input class="input-text radius" type="text" name="fb_status_content" value="" /></td>
+            </tr>
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-success z-button"><i class="Hui-iconfont">&#xe665;</i> 提交</button>
+    </form>
+</div>
+{/block}
+{block name='script'}
+<script type="text/javascript" src="__LIB__/Validform/5.3.2/Validform.min.js"></script>
+<script>
+    $("#Form").Validform({
+        tiptype:2,
+        ajaxPost:true,
+        showAllError:true,
+        callback:function(ret){
+           // console.log(ret)
+            if(ret.code == 0){
+                layer.msg('提交成功!', { offset: 't',icon:1, anim: 5 },function(){
+                    ajax_progress(ret);
+                });
+                return false;
+            }
+            layer.msg(ret.msg, { offset: 't',icon:2, anim: 5 });
+            return false;
+        }
+    });
+</script>
+{/block}

@@ -64,8 +64,8 @@
                     <div class="formControls col-xs-6 col-sm-6">
                         <input type="text" class="input-text" id="upload" value="{:model('File')->name($vo.img)}" placeholder="请点击后面的上传按钮"  style="width: 50%" datatype="*" nullmsg="商品图片不能为空" >
                         <button type="button" class="btn btn-primary radius" onclick="layer_open('文件上传','{:\\think\\Url::build(\'Upload/index\', [\'id\' => \'upload\'])}')">上传</button>
-                       <input type="hidden" name="img" value="{$vo.img}" id="img">
-                        <!--<a onclick="$(this).attr('href', $('#upload').val())" type="button" class="btn btn-success radius" data-lightbox="preview">预览</a>-->
+                        <input type="hidden" name="img" value="{$vo.img}" id="img">
+                        <a onclick="$(this).attr('href', $('#upload').val())" type="button" class="btn btn-success radius" data-lightbox="preview">预览</a>
                     </div>
                     <div class="col-xs-3 col-sm-3"></div>
                 </div>
@@ -105,8 +105,13 @@
     </form>
 </div>
 {/block}
+{block name="style"}
+<link rel="stylesheet" href="__LIB__/lightbox2/css/lightbox.min.css">
+{/block}
 {block name="script"}
 <script type="text/javascript" src="__LIB__/Validform/5.3.2/Validform.min.js"></script>
+<script src="__LIB__/lightbox2/js/lightbox.min.js"></script>
+<script type="text/javascript" src="__LIB__/My97DatePicker/WdatePicker.js"></script>
 <script>
     $(function () {
         $("[name='status'][value='{$vo.status ?? '1'}']").attr("checked",true);

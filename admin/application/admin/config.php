@@ -41,4 +41,17 @@ return [
         // 默认主题
         'default_theme'   => '',
     ],
+    'Focus' => array(
+        'Channel' => [
+            1=> '小巧玲珑书吧',
+        ],
+
+        'Type' => [
+            1=> '首页banner',
+        ],
+
+        'Place' => [
+            1=> '位置1',
+        ],
+    ),
 ];

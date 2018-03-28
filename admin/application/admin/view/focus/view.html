@@ -1,0 +1,84 @@
+{extend name="template/base" /}
+{block name="content"}
+<div class="page-container">
+    <table class="table table-border table-bordered table-hover table-bg mt-20 table_fixed">
+        <thead>
+        <tr>
+            <th colspan="3">基本信息</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th>用户ID：{$list.pm_uid}</th>
+            <th>状态：{:model('PtMember')->getPmStatusAttr($list.pm_status)}</th>
+            <th>创建时间：{:cTime($list['pm_addtime'])}</th>
+        </tr>
+        <tr>
+            <th>默认身份：{:model('PtMember')->getPmIdentityAttr($list.pm_identity)}</th>
+            <th>手机号：{$list.pm_mobile}</th>
+            <th>所在地：{$list.pm_province}-{$list.pm_city}</th>
+        </tr>
+        <tr>
+            <th>思博用户名：{$list.pm_username}</th>
+            <th>平台昵称：{$list.pm_nickname}</th>
+            <th>email：{$list.pm_email}</th>
+        </tr>
+        <tr>
+            <th>真实姓名：{$list.pm_realname}</th>
+            <th>身份证：{$list.pm_idcard}</th>
+            <th></th>
+        </tr>
+        </tbody>
+        {notempty name="list.mr_id"}
+        <thead>
+            <tr>
+                <th colspan="3">雇主信息</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>用户名：{$list.pm_username}</th>
+                <th>平台昵称：{$list.pm_nickname}</th>
+                <th></th>
+            </tr>
+        </tbody>
+        {/notempty}
+        {notempty name="list.interviewe_id"}
+        <thead>
+            <tr>
+                <th colspan="3">撰写者信息</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>工号：{$list.mp_number}</th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <th>技术领域：{$list.type.t_name}</th>
+                <th>撰写模板：{$list.type.t_sname}</th>
+                <th>评语：{$list.interview_remark}</th>
+            </tr>
+        </tbody>
+        {/notempty}
+    </table>
+</div>
+{/block}
+{block name='script'}
+<script>
+    function table_fixed(selector,width) {
+        $obj = $(selector);
+        //未设置宽度自动获取width属性的宽
+        if (typeof width === "undefined"){
+            width = 0;
+            $obj.find("tr:first th").each(function () {
+                width += parseInt($(this).attr("width") || $(this).innerWidth());
+            })
+        }
+        $obj.css({"width":width+"px","table-layout":"fixed"});
+        $obj.wrap('<div style="width:100%;overflow:auto"></div>');
+    }
+    table_fixed('.table_fixed');
+</script>
+{/block}
