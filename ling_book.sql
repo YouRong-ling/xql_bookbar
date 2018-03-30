@@ -11,7 +11,7 @@
  Target Server Version : 50547
  File Encoding         : 65001
 
- Date: 28/03/2018 14:50:07
+ Date: 30/03/2018 17:06:59
 */
 
 SET NAMES utf8mb4;
@@ -80,7 +80,7 @@ CREATE TABLE `book_admin_node`  (
   INDEX `isdelete`(`isdelete`) USING BTREE,
   INDEX `sort`(`sort`) USING BTREE,
   INDEX `group_id`(`group_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 69 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 71 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of book_admin_node
@@ -151,6 +151,7 @@ INSERT INTO `book_admin_node` VALUES (65, 1, 4, 'Product', '商品列表', '', 2
 INSERT INTO `book_admin_node` VALUES (66, 1, 4, 'order', '订单列表', '', 2, 1, 1, 1, 0);
 INSERT INTO `book_admin_node` VALUES (67, 1, 4, 'Focus', '焦点图列表', '', 2, 1, 1, 1, 0);
 INSERT INTO `book_admin_node` VALUES (68, 1, 4, 'FeedBack', '反馈信息列表', '', 2, 1, 1, 1, 0);
+INSERT INTO `book_admin_node` VALUES (69, 1, 4, 'Recommend', '推荐列表', '', 1, 1, 1, 1, 1);
 
 -- ----------------------------
 -- Table structure for book_admin_node_load
@@ -233,7 +234,7 @@ CREATE TABLE `book_admin_user`  (
 -- ----------------------------
 -- Records of book_admin_user
 -- ----------------------------
-INSERT INTO `book_admin_user` VALUES (1, 'admin', '超级管理员', 'e10adc3949ba59abbe56e057f20f883e', 1522118882, '127.0.0.1', 3, 'admin@admin.com', '13121126169', '我是超级管理员', 1, 0, 1222907803, 1451033528);
+INSERT INTO `book_admin_user` VALUES (1, 'admin', '超级管理员', 'e10adc3949ba59abbe56e057f20f883e', 1522397383, '127.0.0.1', 5, 'admin@admin.com', '13121126169', '我是超级管理员', 1, 0, 1222907803, 1451033528);
 INSERT INTO `book_admin_user` VALUES (2, 'demo', '测试', 'e10adc3949ba59abbe56e057f20f883e', 1481206367, '127.0.0.1', 0, '', '', '', 1, 0, 1476777133, 1477399793);
 
 -- ----------------------------
@@ -270,7 +271,18 @@ CREATE TABLE `book_file`  (
   `size` int(10) UNSIGNED NOT NULL DEFAULT 0,
   `add_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '添加时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of book_file
+-- ----------------------------
+INSERT INTO `book_file` VALUES (1, 1, '/tmp/uploads/20180330\\09d69eff6563cc3643723bb9f1f82240.jpg', 'cj.jpg', 'http://admin.lingbook.com', 'image/jpeg', 82823, 1522398743);
+INSERT INTO `book_file` VALUES (2, 1, '/tmp/uploads/20180330\\6b46533ea9b4ee9658d188a3298f7298.jpg', '57ecb9f5Nd0edad02.jpg', 'http://admin.lingbook.com', 'image/jpeg', 12722, 1522399183);
+INSERT INTO `book_file` VALUES (3, 1, '/tmp/uploads/20180330\\a902f8fbcf061c91075098f89978fc93.jpg', '59cdf6deN491ebd9d.jpg', 'http://admin.lingbook.com', 'image/jpeg', 12020, 1522399391);
+INSERT INTO `book_file` VALUES (4, 1, '/tmp/uploads/20180330\\d60acfe2abc999e042f8559deb799a2b.jpg', '59cdf6deN491ebd9d.jpg', 'http://admin.lingbook.com', 'image/jpeg', 12020, 1522399857);
+INSERT INTO `book_file` VALUES (5, 1, '/tmp/uploads/20180330\\d22d31e7ab75bd7359174cf4df1203b7.jpg', '5a5c6211Nee2887ea.jpg', 'http://admin.lingbook.com', 'image/jpeg', 21283, 1522399866);
+INSERT INTO `book_file` VALUES (6, 1, '/tmp/uploads/20180330\\f75649b0bb1ab5f779595123e6cb38dd.jpg', '599d53b0Nfad65b53.jpg', 'http://admin.lingbook.com', 'image/jpeg', 29723, 1522399904);
+INSERT INTO `book_file` VALUES (7, 1, '/tmp/uploads/20180330\\5645e363df9f8c8cf7e455eb4308a51e.jpg', '585b6017N1ffed46c.jpg', 'http://admin.lingbook.com', 'image/jpeg', 25004, 1522399946);
 
 -- ----------------------------
 -- Table structure for book_focus
@@ -293,7 +305,12 @@ CREATE TABLE `book_focus`  (
   `isdelete` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除 1删除 0未删除',
   `status` tinyint(1) UNSIGNED NOT NULL DEFAULT 1 COMMENT '1启用  0禁用',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of book_focus
+-- ----------------------------
+INSERT INTO `book_focus` VALUES (1, '4月1日愚人节活动', 1, 'http://www.lingbook.com', 1526632521, 1530261321, 1, 1, 1, '', 1522398936, 1522398936, 0, 0, 1);
 
 -- ----------------------------
 -- Table structure for book_login_log
@@ -309,7 +326,7 @@ CREATE TABLE `book_login_log`  (
   `login_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `uid`(`uid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of book_login_log
@@ -319,6 +336,8 @@ INSERT INTO `book_login_log` VALUES (2, 1, '127.0.0.1', '本机地址 本机地�
 INSERT INTO `book_login_log` VALUES (3, 1, '127.0.0.1', '本机地址 本机地址  ', 'Chrome(63.0.3239.108)', 'Windows 10', '2018-03-05 09:58:24');
 INSERT INTO `book_login_log` VALUES (4, 1, '127.0.0.1', '本机地址 本机地址  ', 'Chrome(63.0.3239.108)', 'Windows 10', '2018-03-26 14:41:31');
 INSERT INTO `book_login_log` VALUES (5, 1, '127.0.0.1', '本机地址 本机地址  ', 'Chrome(63.0.3239.108)', 'Windows 10', '2018-03-27 10:48:02');
+INSERT INTO `book_login_log` VALUES (6, 1, '127.0.0.1', '本机地址 本机地址  ', 'Firefox(59.0)', 'Windows 10', '2018-03-28 16:12:37');
+INSERT INTO `book_login_log` VALUES (7, 1, '127.0.0.1', '本机地址 本机地址  ', 'Chrome(63.0.3239.108)', 'Windows 10', '2018-03-30 16:09:43');
 
 -- ----------------------------
 -- Table structure for book_node_map
@@ -477,6 +496,7 @@ CREATE TABLE `book_product`  (
   `real_soldnum` int(10) UNSIGNED DEFAULT 0 COMMENT '真实售出量',
   `clicknum` int(10) DEFAULT 0 COMMENT '浏览量',
   `real_clicknum` int(10) UNSIGNED DEFAULT 0 COMMENT '真实浏览量',
+  `is_top` tinyint(1) UNSIGNED DEFAULT 0 COMMENT '是否推荐 1独家 2主编推荐 3 读者推荐',
   `status` tinyint(1) DEFAULT NULL COMMENT '状态 0 正常 1屏蔽 ',
   `uid` int(10) UNSIGNED DEFAULT 0 COMMENT '管理员ID',
   `create_time` int(11) DEFAULT NULL COMMENT '添加时间',
@@ -488,11 +508,37 @@ CREATE TABLE `book_product`  (
 -- ----------------------------
 -- Records of book_product
 -- ----------------------------
-INSERT INTO `book_product` VALUES (6, '东野圭吾', 100.00, 0.00, 4, 0, '', 100, 100, 0, 10, 0, 1, 1, 1522049000, 1522049000, 0);
-INSERT INTO `book_product` VALUES (7, '阿加莎', 18.00, 2.00, 1, 0, '11111', 3, 4, 0, 5, 0, 1, 1, 1522049000, 1522059932, 0);
-INSERT INTO `book_product` VALUES (8, '白夜行', 23.50, 20.80, 2, 0, '发发发', 100, 80, 0, 50, 0, 1, 1, 1522049000, 1522049000, 0);
-INSERT INTO `book_product` VALUES (9, '麒麟之翼', 26.80, 0.00, 2, 0, '东野圭吾', 88, 10, 0, 10, 0, 1, 1, 1522119859, 1522119859, 0);
-INSERT INTO `book_product` VALUES (10, '毕业', 18.60, 1.00, 2, 1, '11', 11, 0, 0, 0, 0, 1, 1, 1522137283, 1522137283, 0);
+INSERT INTO `book_product` VALUES (6, '东野圭吾：圣女的救济', 10.00, 0.00, 4, 7, '', 100, 100, 0, 10, 0, 3, 1, 1, 1522049000, 1522399947, 0);
+INSERT INTO `book_product` VALUES (7, '东野圭吾：放学后（2017精装典藏版）', 18.00, 2.00, 1, 6, '11111', 3, 4, 0, 5, 0, 1, 1, 1, 1522049000, 1522399909, 0);
+INSERT INTO `book_product` VALUES (8, '东野圭吾：黎明之街', 23.50, 20.80, 2, 5, '发发发', 100, 80, 0, 50, 0, 2, 1, 1, 1522049000, 1522399870, 0);
+INSERT INTO `book_product` VALUES (9, ' 东野圭吾：秘密（无删节精装典藏版）', 26.80, 0.00, 2, 3, '东野圭吾', 88, 10, 0, 10, 0, 2, 1, 1, 1522119859, 1522399828, 0);
+INSERT INTO `book_product` VALUES (10, '恶意（2016版)', 18.60, 1.00, 2, 2, '11', 11, 0, 0, 0, 0, 1, 1, 1, 1522137283, 1522399811, 0);
+
+-- ----------------------------
+-- Table structure for book_recommend
+-- ----------------------------
+DROP TABLE IF EXISTS `book_recommend`;
+CREATE TABLE `book_recommend`  (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '推荐ID',
+  `title` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '' COMMENT '推荐名称',
+  `status` tinyint(1) UNSIGNED DEFAULT 0 COMMENT '状态 0 正常 1删除',
+  `sort` tinyint(10) UNSIGNED DEFAULT 0 COMMENT '排序',
+  `remark` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '' COMMENT '备注',
+  `uid` int(10) UNSIGNED DEFAULT 0 COMMENT '管理员ID',
+  `create_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '添加时间',
+  `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '修改时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '推荐模块' ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of book_recommend
+-- ----------------------------
+INSERT INTO `book_recommend` VALUES (1, '热门', 1, 1, '', 0, 0, 0);
+INSERT INTO `book_recommend` VALUES (2, '最新', 1, 1, '', 0, 0, 0);
+INSERT INTO `book_recommend` VALUES (3, '主编推荐', 1, 1, '', 0, 0, 0);
+INSERT INTO `book_recommend` VALUES (4, '销量', 1, 2, '', 0, 0, 0);
+INSERT INTO `book_recommend` VALUES (5, '小编推荐', 1, 1, '', 0, 0, 0);
+INSERT INTO `book_recommend` VALUES (6, '独家特供', 1, 1, '', 1, 1522398484, 1522398484);
 
 -- ----------------------------
 -- Table structure for book_type
