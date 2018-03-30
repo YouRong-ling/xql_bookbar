@@ -70,6 +70,8 @@ class Product extends Controller
             $this->view->assign("vo", 1);
             $type = Db::name('type')->field('id,title')->where('status',1)->select();
             $this->view->assign('type',$type);
+            $recommend = Db::name('recommend')->field('id,title')->where('status',1)->order('sort desc')->select();
+            $this->view->assign('recommend',$recommend);
             // 添加
             return $this->view->fetch(isset($this->template) ? $this->template : 'edit');
         }
@@ -131,6 +133,8 @@ class Product extends Controller
 
             $this->view->assign("vo", $vo);
             $type = Db::name('type')->field('id,title')->where('status',1)->select();
+            $recommend = Db::name('recommend')->field('id,title')->where('status',1)->order('sort desc')->select();
+            $this->view->assign('recommend',$recommend);
             $this->view->assign('type',$type);
             return $this->view->fetch();
         }

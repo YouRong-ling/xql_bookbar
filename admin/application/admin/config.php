@@ -54,4 +54,5 @@ return [
             1=> '位置1',
         ],
     ),
+    'DOMAIN' => 'http://admin.lingbook.com'
 ];

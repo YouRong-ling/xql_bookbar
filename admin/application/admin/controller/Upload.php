@@ -12,6 +12,7 @@ namespace app\admin\controller;
 
 use app\admin\Controller;
 use think\Db;
+use think\Config;
 
 class Upload extends Controller
 {
@@ -37,12 +38,12 @@ class Upload extends Controller
             return ajax_return_error($file->getError());
         }
         $data =  $this->request->root() .'/tmp/uploads/' . $info->getSaveName();
-        $name =  'http://www.tpadmin.com/tmp/uploads/' . $info->getSaveName();
+        $name =  Config::get('DOMAIN').'/tmp/uploads/' . $info->getSaveName();
         $insert = [
             'cate'     => 1,
             'name'     => $data,
             'original' => $info->getInfo('name'),
-            'domain'   => 'http://www.tpadmin.com',
+            'domain'   => Config::get('DOMAIN'),
             'type'     => $info->getInfo('type'),
             'size'     => $info->getInfo('size'),
             'add_time'    => time(),
@@ -63,7 +64,7 @@ class Upload extends Controller
         $name = ROOT_PATH . 'public/tmp/uploads/' . get_random();
         $name = \File::downloadImage($url, $name);
 
-        $ret = 'http://www.tpadmin.com/tmp/uploads/' . basename($name);
+        $ret = Config::get('DOMAIN').'/tmp/uploads/' . basename($name);
 
         return ajax_return(['url' => $ret], '抓取成功');
     }

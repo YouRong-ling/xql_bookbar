@@ -1,6 +1,7 @@
 <td><input type="checkbox" name="id[]" value="{$vo.id}"></td>
 <td>{$vo.id}</td>
 <td>{$vo.title|high_light=$Request.param.name}</td>
+<td><a href="{:model('Focus')->getImgUrlById($vo['img'])}" target="_blank" ><img class="Preview"  style="height: 120px;width: 220px;" src="{:model('Focus')->getImgUrlById($vo['img'])}"  alt="" /></a></td>
 <td>{:model('Type')->typeInfo($vo.type)}</td>
 <td>{$vo.price}</td>
 <td>{$vo.sale_price}</td>
