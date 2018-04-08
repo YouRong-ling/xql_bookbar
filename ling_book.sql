@@ -11,7 +11,7 @@
  Target Server Version : 50547
  File Encoding         : 65001
 
- Date: 30/03/2018 17:06:59
+ Date: 08/04/2018 11:15:47
 */
 
 SET NAMES utf8mb4;
@@ -234,7 +234,7 @@ CREATE TABLE `book_admin_user`  (
 -- ----------------------------
 -- Records of book_admin_user
 -- ----------------------------
-INSERT INTO `book_admin_user` VALUES (1, 'admin', '超级管理员', 'e10adc3949ba59abbe56e057f20f883e', 1522397383, '127.0.0.1', 5, 'admin@admin.com', '13121126169', '我是超级管理员', 1, 0, 1222907803, 1451033528);
+INSERT INTO `book_admin_user` VALUES (1, 'admin', '超级管理员', 'e10adc3949ba59abbe56e057f20f883e', 1523155620, '127.0.0.1', 6, 'admin@admin.com', '13121126169', '我是超级管理员', 1, 0, 1222907803, 1451033528);
 INSERT INTO `book_admin_user` VALUES (2, 'demo', '测试', 'e10adc3949ba59abbe56e057f20f883e', 1481206367, '127.0.0.1', 0, '', '', '', 1, 0, 1476777133, 1477399793);
 
 -- ----------------------------
@@ -326,7 +326,7 @@ CREATE TABLE `book_login_log`  (
   `login_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `uid`(`uid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of book_login_log
@@ -338,6 +338,7 @@ INSERT INTO `book_login_log` VALUES (4, 1, '127.0.0.1', '本机地址 本机地�
 INSERT INTO `book_login_log` VALUES (5, 1, '127.0.0.1', '本机地址 本机地址  ', 'Chrome(63.0.3239.108)', 'Windows 10', '2018-03-27 10:48:02');
 INSERT INTO `book_login_log` VALUES (6, 1, '127.0.0.1', '本机地址 本机地址  ', 'Firefox(59.0)', 'Windows 10', '2018-03-28 16:12:37');
 INSERT INTO `book_login_log` VALUES (7, 1, '127.0.0.1', '本机地址 本机地址  ', 'Chrome(63.0.3239.108)', 'Windows 10', '2018-03-30 16:09:43');
+INSERT INTO `book_login_log` VALUES (8, 1, '127.0.0.1', '本机地址 本机地址  ', 'Chrome(63.0.3239.108)', 'Windows 10', '2018-04-08 10:47:00');
 
 -- ----------------------------
 -- Table structure for book_node_map
@@ -610,7 +611,20 @@ CREATE TABLE `book_web_log_001`  (
   INDEX `uid`(`uid`) USING BTREE,
   INDEX `ip`(`ip`) USING BTREE,
   INDEX `create_at`(`create_at`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '网站日志' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '网站日志' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of book_web_log_001
+-- ----------------------------
+INSERT INTO `book_web_log_001` VALUES (1, 0, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Firefox(59.0)', 'http://admin.lingbook.com/admin.html', 'admin', 'Index', 'index', 'GET', 'a:0:{}', 1522635444);
+INSERT INTO `book_web_log_001` VALUES (2, 0, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Firefox(59.0)', 'http://admin.lingbook.com/admin/pub/login.html', 'admin', 'Pub', 'login', 'GET', 'a:0:{}', 1522635445);
+INSERT INTO `book_web_log_001` VALUES (3, 0, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin.html', 'admin', 'Index', 'index', 'GET', 'a:0:{}', 1523155611);
+INSERT INTO `book_web_log_001` VALUES (4, 0, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/pub/login.html', 'admin', 'Pub', 'login', 'GET', 'a:0:{}', 1523155612);
+INSERT INTO `book_web_log_001` VALUES (5, 0, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/pub/checklogin.html', 'admin', 'Pub', 'checklogin', 'POST', 'a:3:{s:7:\"account\";s:5:\"admin\";s:8:\"password\";s:6:\"123456\";s:7:\"captcha\";s:4:\"u7ma\";}', 1523155619);
+INSERT INTO `book_web_log_001` VALUES (6, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/index/index.html', 'admin', 'Index', 'index', 'GET', 'a:0:{}', 1523155620);
+INSERT INTO `book_web_log_001` VALUES (7, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/index/welcome.html', 'admin', 'Index', 'welcome', 'GET', 'a:0:{}', 1523155620);
+INSERT INTO `book_web_log_001` VALUES (8, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/admin_group/index.html', 'admin', 'AdminGroup', 'index', 'GET', 'a:0:{}', 1523155623);
+INSERT INTO `book_web_log_001` VALUES (9, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/Admin/user/index.html', 'admin', 'User', 'index', 'GET', 'a:0:{}', 1523155626);
 
 -- ----------------------------
 -- Table structure for book_web_log_all
@@ -635,5 +649,18 @@ CREATE TABLE `book_web_log_all`  (
   INDEX `ip`(`ip`) USING BTREE,
   INDEX `create_at`(`create_at`) USING BTREE
 ) ENGINE = MRG_MYISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '网站日志' INSERT_METHOD = LAST ROW_FORMAT = Dynamic UNION = (`book_web_log_001`);
+
+-- ----------------------------
+-- Records of book_web_log_all
+-- ----------------------------
+INSERT INTO `book_web_log_all` VALUES (1, 0, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Firefox(59.0)', 'http://admin.lingbook.com/admin.html', 'admin', 'Index', 'index', 'GET', 'a:0:{}', 1522635444);
+INSERT INTO `book_web_log_all` VALUES (2, 0, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Firefox(59.0)', 'http://admin.lingbook.com/admin/pub/login.html', 'admin', 'Pub', 'login', 'GET', 'a:0:{}', 1522635445);
+INSERT INTO `book_web_log_all` VALUES (3, 0, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin.html', 'admin', 'Index', 'index', 'GET', 'a:0:{}', 1523155611);
+INSERT INTO `book_web_log_all` VALUES (4, 0, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/pub/login.html', 'admin', 'Pub', 'login', 'GET', 'a:0:{}', 1523155612);
+INSERT INTO `book_web_log_all` VALUES (5, 0, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/pub/checklogin.html', 'admin', 'Pub', 'checklogin', 'POST', 'a:3:{s:7:\"account\";s:5:\"admin\";s:8:\"password\";s:6:\"123456\";s:7:\"captcha\";s:4:\"u7ma\";}', 1523155619);
+INSERT INTO `book_web_log_all` VALUES (6, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/index/index.html', 'admin', 'Index', 'index', 'GET', 'a:0:{}', 1523155620);
+INSERT INTO `book_web_log_all` VALUES (7, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/index/welcome.html', 'admin', 'Index', 'welcome', 'GET', 'a:0:{}', 1523155620);
+INSERT INTO `book_web_log_all` VALUES (8, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/admin_group/index.html', 'admin', 'AdminGroup', 'index', 'GET', 'a:0:{}', 1523155623);
+INSERT INTO `book_web_log_all` VALUES (9, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/Admin/user/index.html', 'admin', 'User', 'index', 'GET', 'a:0:{}', 1523155626);
 
 SET FOREIGN_KEY_CHECKS = 1;
