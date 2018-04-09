@@ -4,12 +4,13 @@ namespace app\controllers;
 
 use Yii;
 use yii\filters\AccessControl;
+use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 
-class SiteController extends BaseController
+class SiteController extends Controller
 {
     /**
      * @inheritdoc
@@ -54,23 +55,40 @@ class SiteController extends BaseController
     }
 
     /**
-     * Displays homepage.
+     * 首页
      *
      * @return string
      */
     public function actionIndex()
     {
-        //echo 'ql';exit;
-        return $this->render('index');
-    }
+//        $typedata = Yii::$app->db->createCommand('SELECT `id`,`title` FROM book_type')->queryAll();
+//        Yii::$app->db->createCommand()->update('user', ['age' => 40], 'name = test')->execute();
+//        Yii::$app->db->createCommand()->delete('user', 'age = 30')->execute();
+//        var_dump($typedata);exit;
 
-    public function actionSay()
-    {
-        echo 'test';
+        //焦点图
+        $data['focus'] = (new \yii\db\Query())
+            ->select('`id`,`ad_name`,ad_img_key,ad_url')
+            ->from('book_focus')
+            ->where(['status' => 1,'ad_type'=>1,'ad_place'=>1])
+            ->limit(1)
+            ->all();
+//        var_dump($data);
+
+        //模块 -》 商品
+        $data['product'] = (new \yii\db\Query())
+            ->select('`id`,`title`,price,sale_price,type,img,soldnum')
+            ->from('book_product')
+            ->where(['status' => 1])
+            ->all();
+
+        var_dump($data['product']);
+
+        return $this->render('index',$data);
     }
 
     /**
-     * Login action.
+     * 登录
      *
      * @return Response|string
      */
@@ -90,7 +108,28 @@ class SiteController extends BaseController
     }
 
     /**
-     * Logout action.
+     * 注册
+     *
+     * @return Response|string
+     */
+    public function actionRegister()
+    {
+//        Yii::$app->db->createCommand()->insert('user', [
+//            'name' => 'test',
+//            'age' => 30,
+//        ])->execute();
+
+        $model = new LoginForm();
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            return $this->goBack();
+        }
+        return $this->render('register', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * 退出
      *
      * @return Response
      */
@@ -102,7 +141,7 @@ class SiteController extends BaseController
     }
 
     /**
-     * Displays contact page. 联系
+     * 联系我们
      *
      * @return Response|string
      */
@@ -120,22 +159,12 @@ class SiteController extends BaseController
     }
 
     /**
-     * Displays about page.
+     * 关于我们
      *
      * @return string
      */
     public function actionAbout()
     {
         return $this->render('about');
-    }
-
-    public function actionCart()
-    {
-        return $this->render('cart');
-    }
-
-    public function actionOrder()
-    {
-        return $this->render('order');
     }
 }

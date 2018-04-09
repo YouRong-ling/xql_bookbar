@@ -8,7 +8,11 @@ $this->title();
 ?>
 <div class="site-index">
     <div class="row">
-        <img class="col-lg-12" src="/images/cj.jpg" title="春节促销买三免一" alt="春节促销买三免一">
+        <?php foreach($focus as $v){ ?>
+        <a href="<?php echo $v['ad_url']; ?>">
+            <img class="col-lg-12" src="/images/cj.jpg" title="<?php echo $v['ad_name']; ?>" alt="<?php echo $v['ad_name']; ?>">
+        </a>
+        <?php } ?>
     </div>
     <div class="body-content border-b">
         <h3>为您推荐</h3>
@@ -58,6 +62,5 @@ $this->title();
                 <div class="cart-t"><a href="//cart.jd.com/gate.action?pid=11984135&amp;pcount=1&amp;ptype=1&amp;" target="_blank">放入购物车</a></div>
             </div>
         </div>
-
     </div>
 </div>
