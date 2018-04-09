@@ -4,7 +4,7 @@
 <td>{$vo.title|high_light=$Request.param.title}</td>
 <td>{$vo.press}</td>
 <td>{$vo.page}</td>
-<td><a href="{:model('Focus')->getImgUrlById($vo['img'])}" target="_blank" ><img class="Preview"  style="height: 120px;width: 220px;" src="{:model('Focus')->getImgUrlById($vo['img'])}"  alt="" /></a></td>
+<td><img class="Preview"  style="height: 120px;width: 220px;" src="{:model('Focus')->getImgUrlById($vo['img'])}"  alt="" /></td>
 <td>{:model('Type')->typeInfo($vo.type)}</td>
 <td>{$vo.price}</td>
 <td>{$vo.sale_price}</td>
