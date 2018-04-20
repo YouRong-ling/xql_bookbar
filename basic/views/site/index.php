@@ -9,8 +9,8 @@ $this->title();
 <div class="site-index">
     <div class="row">
         <?php foreach($focus as $v){ ?>
-        <a href="<?php echo $v['ad_url']; ?>">
-            <img class="col-lg-12" src="/images/cj.jpg" title="<?=$v['ad_name']?>" alt="<?=$v['ad_name'] ?>">
+        <a href="<?=$v['ad_url']?>">
+            <img class="col-lg-12" src="http://admin.lingbook.com<?=$v['img']?>" title="<?=$v['ad_name']?>" alt="<?=$v['ad_name'] ?>">
         </a>
         <?php } ?>
     </div>
@@ -32,5 +32,4 @@ $this->title();
         </div>
     </div>
     <?php } ?>
-
 </div>

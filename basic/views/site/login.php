@@ -8,7 +8,6 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 $this->title();
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login">
     <h1>登录</h1>
@@ -39,8 +38,6 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
     <?php ActiveForm::end(); ?>
-
     <div class="col-lg-offset-1" style="color:#999;">
-
     </div>
 </div>

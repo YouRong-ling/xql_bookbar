@@ -156,7 +156,7 @@ input { padding: 0; margin: 0; }
 #hd .icon_n {position: absolute;display: block;bottom: 26px;left: 50%;margin-left: -28px;text-align: center; font-size: 0;}
 
 #hd .sub {background: #f5f5f5; float: none; width: auto; }
-#hd .sub ul { height: 31px; margin: 0 auto; overflow: hidden; line-height: 30px; width: 1132px;}
+#hd .sub ul { height: 31px; margin: 0 auto; overflow: hidden; line-height: 30px; width: 1155px;}
 #hd .sub ul li {float: left; padding: 0 15px; margin-left: -1px; white-space: nowrap; background:url(http://img4.ddimg.cn/header/header2014/sub_line_bg.png) right center no-repeat;_line-height: 12px;
 _padding: 9px 15px 8px;}
 #hd .sub ul li img { vertical-align: middle; _vertical-align: top;}

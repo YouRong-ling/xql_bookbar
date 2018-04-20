@@ -71,9 +71,14 @@ class SiteController extends Controller
             ->select('`id`,`ad_name`,ad_img_key,ad_url')
             ->from('book_focus')
             ->where(['status' => 1,'ad_type'=>1,'ad_place'=>1])
+            ->orderBy('id desc')
             ->limit(1)
             ->all();
-//        var_dump($data);
+        foreach($data['focus'] as $k=>$v){
+            $data['focus'][$k]['img'] = (new \yii\db\Query())
+                ->select('`name`')->from('book_file')->where(['id' => $v['ad_img_key']])->column()[0];
+        }
+//        var_dump($data['focus']);
 
        $recommend = (new \yii\db\Query())
             ->select('`id`,`title`')

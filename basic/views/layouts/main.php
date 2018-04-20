@@ -59,9 +59,9 @@ AppAsset::register($this);
 
         <div style="position:relative;" class="logo_line_out">
             <div class="logo_line" dd_name="搜索框">
-                <div class="logo"><img src="/images/logo2.png" usemap="#logo_link">
-                    <map name="logo_link" id="logo_link" dd_name="logo区"><area shape="rect" coords="0,18,200,93" href="/" onfocus="this.blur();">
-                        <area shape="rect" coords="200,18,320,93" href="/" title="小巧玲珑书吧" target="_blank" onfocus="this.blur();"></map></div>
+                <div class="logo">
+                    <img src="/images/logo1.png">
+                </div>
                 <div class="search">
                     <form action="#" name="searchform" id="form_search_new" onsubmit="return searchsubmit();" method="GET">
                         <label for="key_S" class="label_search" id="label_key" onclick="this.style.color='rgb(255, 255, 255)';" style="visibility: visible; color: rgb(102, 102, 102);"></label>
@@ -77,38 +77,53 @@ AppAsset::register($this);
                     </div>
                     <a href="#" class="search_advs" target="_blank" name="ddnav_adv_s" dd_name="高级搜索">高级搜索</a>
                 </div>
-
-                <div class="nav_top" dd_name="一级导航条">
-                    <ul>
-                        <?php
-                       $type = (new \yii\db\Query())
-                            ->select('`id`,`title`')
-                            ->from('book_type')
-                            ->where(['status' => 1])
-                            ->orderBy(['sort'=>'desc'])
-                            ->limit(10)
-                            ->all();
-                       foreach ($type as $v){
-                           echo '<li><a name="nav1" href="?type='.$v['id'].'" target="_blank">'.$v['title'].'</a></li>';
-                       }
-                        ?>
-
-<!--                        <li><a name="nav1" href="#" target="_blank">电子书</a></li>-->
-<!--                        <li><a name="nav1" href="#" target="_blank">网络文学</a></li>-->
-<!--                        <li><a name="nav1" href="#" target="_blank">服装</a></li>-->
-<!--                        <li><a name="nav1" href="#" target="_blank">运动户外</a></li>-->
-<!--                        <li><a name="nav1" href="#" target="_blank">孕婴童</a></li>-->
-<!--                        <li><a name="nav1" href="# " target="_blank">家居</a></li>-->
-<!--                        <li><a name="nav1" href="#" target="_blank">创意文具</a></li>-->
-<!--                        <li><a name="nav1" href="#" target="_blank">食品</a></li>-->
-                    </ul>
-                </div>
                 <div id="suggest_key" class="suggest_key" style="display:none;"></div>
                 <div class="ddnew_cart"><a name="购物车" href="?r=site/cart" dd_name="购物车"><i class="icon_card"></i>购物车<b id="cart_items_count">0</b></a></div>
                 <div class="ddnew_order">
                     <a target="_blank" href="?r=site/order" name="我的订单" dd_name="我的订单" rel="nofollow">我的订单<b id="unpaid_num" style="color:#ff2832;font:bold 12px Arial;"></b></a>
                 </div>
             </div>
+        </div>
+        <div class="nav_top" dd_name="一级导航条">
+            <div class="nav_top">
+                <ul>
+                    <li class="all"><a href="/" id="a_category" name="cate" class="sort_button" onmouseover="showCategory('a_category','__ddnav_sort','//static.dangdang.com/js/header2012/categorydata_new.js?20180115');" onmouseout="closeCategory('__ddnav_sort');" dd_name="全部商品分类" target="_blank">全部商品分类</a></li>
+                    <?php
+                    $type = (new \yii\db\Query())
+                        ->select('`id`,`title`')
+                        ->from('book_type')
+                        ->where(['status' => 1])
+                        ->orderBy(['sort'=>'desc'])
+                        ->limit(10)
+                        ->all();
+                    foreach ($type as $v){
+                        echo '<li><a name="nav1" href="?type='.$v['id'].'" target="_blank">'.$v['title'].'</a></li>';
+                    }
+                    ?>
+                </ul>
+            </div>
+        </div>
+
+        <div class="sub">
+            <ul>
+                <li><a name="nav2" target="_blank" href="javascript:void(0);">图书排行榜</a></li>
+                <li><a name="nav2" target="_blank" href="javascript:void(0);">童书</a></li>
+                <li><a name="nav2" target="_blank" href="javascript:void(0);">教辅</a></li>
+                <li><a name="nav2" target="_blank" href="javascript:void(0);">小说</a></li>
+                <li><a name="nav2" target="_blank" href="javascript:void(0);">文学</a></li>
+                <li><a name="nav2" target="_blank" href="javascript:void(0);">青春文学</a></li>
+                <li><a name="nav2" target="_blank" href="javascript:void(0);">传记</a></li>
+                <li><a name="nav2" target="_blank" href="javascript:void(0);">成功励志</a></li>
+                <li><a name="nav2" target="_blank" href="javascript:void(0);">网络文学</a></li>
+                <li><a name="nav2" target="_blank" href="javascript:void(0);">历史</a></li>
+                <li><a name="nav2" target="_blank" href="javascript:void(0);">哲学宗教</a></li>
+                <li><a name="nav2" target="_blank" href="javascript:void(0);">亲子家教</a></li>
+                <li><a name="nav2" target="_blank" href="javascript:void(0);">保健养生</a></li>
+                <li><a name="nav2" target="_blank" href="javascript:void(0);">考试</a></li>
+                <li><a name="nav2" target="_blank" href="javascript:void(0);">科技</a></li>
+                <li><a name="nav2" target="_blank" href="javascript:void(0);">进口原版</a></li>
+                <li><a name="nav2" target="_blank" href="javascript:void(0);">电子书</a></li>
+            </ul>
         </div>
     </div>
 
@@ -119,7 +134,6 @@ AppAsset::register($this);
         <?= $content ?>
     </div>
 </div>
-
 
 <footer class="footer">
     <div class="container visible-lg-block">
