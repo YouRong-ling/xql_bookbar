@@ -75,14 +75,29 @@ class SiteController extends Controller
             ->all();
 //        var_dump($data);
 
-        //模块 -》 商品
-        $data['product'] = (new \yii\db\Query())
-            ->select('`id`,`title`,price,sale_price,type,img,soldnum')
-            ->from('book_product')
+       $recommend = (new \yii\db\Query())
+            ->select('`id`,`title`')
+            ->from('book_recommend')
             ->where(['status' => 1])
             ->all();
+       $recommend = array_column($recommend,'title','id');
 
-        var_dump($data['product']);
+//        var_dump($recommend);
+
+        //模块 -》 商品
+        $tmp = (new \yii\db\Query())
+            ->select('`id`,`title`,price,sale_price,type,img,soldnum,is_top')
+            ->from('book_product')
+            ->where(['status' => 1])
+//            ->limit(10)
+            ->all();
+        foreach($tmp as $v){
+            $v['img'] = (new \yii\db\Query())
+                ->select('`name`')->from('book_file')->where(['id' => $v['img']])->column()[0];
+            $data['product'][$recommend[$v['is_top']]][] = $v;
+        }
+
+//        var_dump($data['product']);
 
         return $this->render('index',$data);
     }

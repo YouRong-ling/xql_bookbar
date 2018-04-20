@@ -11,7 +11,7 @@
  Target Server Version : 50547
  File Encoding         : 65001
 
- Date: 09/04/2018 18:46:21
+ Date: 20/04/2018 11:36:21
 */
 
 SET NAMES utf8mb4;
@@ -234,7 +234,7 @@ CREATE TABLE `book_admin_user`  (
 -- ----------------------------
 -- Records of book_admin_user
 -- ----------------------------
-INSERT INTO `book_admin_user` VALUES (1, 'admin', '超级管理员', 'e10adc3949ba59abbe56e057f20f883e', 1523155620, '127.0.0.1', 6, 'admin@admin.com', '13121126169', '我是超级管理员', 1, 0, 1222907803, 1451033528);
+INSERT INTO `book_admin_user` VALUES (1, 'admin', '超级管理员', 'e10adc3949ba59abbe56e057f20f883e', 1524125404, '127.0.0.1', 7, 'admin@admin.com', '13121126169', '我是超级管理员', 1, 0, 1222907803, 1451033528);
 INSERT INTO `book_admin_user` VALUES (2, 'demo', '测试', 'e10adc3949ba59abbe56e057f20f883e', 1481206367, '127.0.0.1', 0, '', '', '', 1, 0, 1476777133, 1477399793);
 
 -- ----------------------------
@@ -326,7 +326,7 @@ CREATE TABLE `book_login_log`  (
   `login_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `uid`(`uid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of book_login_log
@@ -339,6 +339,7 @@ INSERT INTO `book_login_log` VALUES (5, 1, '127.0.0.1', '本机地址 本机地�
 INSERT INTO `book_login_log` VALUES (6, 1, '127.0.0.1', '本机地址 本机地址  ', 'Firefox(59.0)', 'Windows 10', '2018-03-28 16:12:37');
 INSERT INTO `book_login_log` VALUES (7, 1, '127.0.0.1', '本机地址 本机地址  ', 'Chrome(63.0.3239.108)', 'Windows 10', '2018-03-30 16:09:43');
 INSERT INTO `book_login_log` VALUES (8, 1, '127.0.0.1', '本机地址 本机地址  ', 'Chrome(63.0.3239.108)', 'Windows 10', '2018-04-08 10:47:00');
+INSERT INTO `book_login_log` VALUES (9, 1, '127.0.0.1', '本机地址 本机地址  ', 'Chrome(63.0.3239.108)', 'Windows 10', '2018-04-19 16:10:04');
 
 -- ----------------------------
 -- Table structure for book_node_map
@@ -459,33 +460,51 @@ INSERT INTO `book_one_two_three_four` VALUES (1, 'yuan1994', 'tpadmin', '2', '1'
 -- ----------------------------
 DROP TABLE IF EXISTS `book_order`;
 CREATE TABLE `book_order`  (
-  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `user_id` int(5) NOT NULL DEFAULT 0 COMMENT '用户ID',
-  `username` char(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '用户名',
-  `product_id` int(10) UNSIGNED DEFAULT 0 COMMENT '商品ID',
-  `product_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '' COMMENT '商品名称',
-  `type` int(10) UNSIGNED DEFAULT 0 COMMENT '商品分类',
-  `pay_real` double(10, 2) NOT NULL DEFAULT 0.00 COMMENT '实收金额',
-  `pay_amout` double(10, 2) NOT NULL DEFAULT 0.00 COMMENT '订单金额',
-  `pay_channels` tinyint(1) NOT NULL DEFAULT 0 COMMENT '支付渠道 1支付宝 2微信 3网银 ',
-  `pay_account` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '支付账号',
-  `shroff_account` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '收款账号',
-  `source` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '订单来源',
-  `pay_time` int(10) NOT NULL DEFAULT 0 COMMENT '支付时间',
-  `orderstatus` tinyint(1) NOT NULL DEFAULT 1 COMMENT '订单状态 1未支付 2已支付 3申请退款 4已退款 5失效',
-  `desc` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '订单描述',
-  `create_time` int(10) NOT NULL DEFAULT 0 COMMENT '生成时间',
-  `update_time` int(10) UNSIGNED DEFAULT 0 COMMENT '修改时间',
-  `isdelete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0=开启订单；1=关闭订单',
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `order_number` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '订单号',
+  `uid` int(11) NOT NULL DEFAULT 0 COMMENT '用户ID',
+  `pay_price` double(20, 2) NOT NULL DEFAULT 0.00 COMMENT '商品价格',
+  `is_pay` tinyint(1) NOT NULL DEFAULT 1 COMMENT '订单状态 1未支付 2已支付 3申请退款 4已退款 5失效 6 已完成 ',
+  `pay_time` int(1) NOT NULL DEFAULT 0 COMMENT '支付时间',
+  `pay_channels` tinyint(1) UNSIGNED DEFAULT 0 COMMENT '支付渠道 1支付宝 2微信 3网银',
+  `pay_account` varchar(80) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '' COMMENT '支付账号',
+  `shroff_account` varchar(80) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '' COMMENT '收款账号',
+  `is_ship` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否已经发货 0 未发货 1 已发货',
+  `ship_time` int(10) NOT NULL DEFAULT 0 COMMENT '发货时间',
+  `is_receipt` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否已经收货 0 未收货 1 已收货 3 已退货',
+  `receipt_time` int(10) NOT NULL DEFAULT 0 COMMENT '收货时间',
+  `ship_nmber` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '快递单号',
+  `desc` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '' COMMENT '订单备注',
+  `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '记录状态 1正常 0 禁用 -1删除',
+  `create_time` int(10) NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `update_time` int(10) NOT NULL DEFAULT 0 COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '订单表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for book_order_product
+-- ----------------------------
+DROP TABLE IF EXISTS `book_order_product`;
+CREATE TABLE `book_order_product`  (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `order_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '订单号',
+  `product_id` int(10) NOT NULL DEFAULT 0 COMMENT '商品ID',
+  `product_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '' COMMENT '商品名称',
+  `product_type` int(10) UNSIGNED DEFAULT 0 COMMENT '商品类型',
+  `product_num` int(10) UNSIGNED NOT NULL DEFAULT 1 COMMENT '商品数量',
+  `product_price` double(20, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '商品价格',
+  `status` tinyint(4) UNSIGNED NOT NULL DEFAULT 1 COMMENT '记录状态 1正常 0 禁用 -1删除',
+  `create_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `update_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '修改时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '订单与商品的关联表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for book_product
 -- ----------------------------
 DROP TABLE IF EXISTS `book_product`;
 CREATE TABLE `book_product`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '商品ID',
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '商品ID',
   `title` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '商品名称',
   `name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '' COMMENT '外文书名',
   `price` decimal(10, 2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '商品价格',
@@ -546,6 +565,21 @@ INSERT INTO `book_recommend` VALUES (5, '小编推荐', 1, 1, '', 0, 0, 0);
 INSERT INTO `book_recommend` VALUES (6, '独家特供', 1, 1, '', 1, 1522398484, 1522398484);
 
 -- ----------------------------
+-- Table structure for book_shopcar
+-- ----------------------------
+DROP TABLE IF EXISTS `book_shopcar`;
+CREATE TABLE `book_shopcar`  (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NOT NULL DEFAULT 0 COMMENT '用户ID 关联user表id',
+  `pro_id` int(11) NOT NULL DEFAULT 0 COMMENT '商品ID 关联product',
+  `num` int(10) NOT NULL DEFAULT 0 COMMENT '商品数量',
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '1 正常 0 删除',
+  `create_time` int(11) NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `update_time` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '修改时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '购物车' ROW_FORMAT = Compact;
+
+-- ----------------------------
 -- Table structure for book_type
 -- ----------------------------
 DROP TABLE IF EXISTS `book_type`;
@@ -578,16 +612,16 @@ INSERT INTO `book_type` VALUES (7, '育儿', 1, 1, '育儿', 1, 1520220576, 0);
 DROP TABLE IF EXISTS `book_user`;
 CREATE TABLE `book_user`  (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-  `username` char(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户名',
-  `password` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码',
-  `realname` char(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '真实姓名',
+  `username` char(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '用户名',
+  `password` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '密码',
+  `realname` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '' COMMENT '真实姓名',
   `mobile` char(15) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '用户手机',
   `email` char(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '用户邮箱',
   `sex` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '性别',
   `img` int(5) NOT NULL DEFAULT 0 COMMENT '头像 ',
-  `reg_ip` bigint(20) NOT NULL DEFAULT 0 COMMENT '注册IP',
+  `reg_ip` char(15) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '注册IP',
   `reg_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '注册时间',
-  `last_login_ip` bigint(20) NOT NULL DEFAULT 0 COMMENT '最后登录IP',
+  `last_login_ip` char(15) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '最后登录IP',
   `login` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '登录次数',
   `last_login_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '最后登录时间',
   PRIMARY KEY (`id`) USING BTREE
@@ -615,7 +649,7 @@ CREATE TABLE `book_web_log_001`  (
   INDEX `uid`(`uid`) USING BTREE,
   INDEX `ip`(`ip`) USING BTREE,
   INDEX `create_at`(`create_at`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 54 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '网站日志' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 92 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '网站日志' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of book_web_log_001
@@ -673,6 +707,44 @@ INSERT INTO `book_web_log_001` VALUES (50, 1, '127.0.0.1', '本机地址 本机�
 INSERT INTO `book_web_log_001` VALUES (51, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/product/index.html', 'admin', 'Product', 'index', 'GET', 'a:0:{}', 1523258497);
 INSERT INTO `book_web_log_001` VALUES (52, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/product/index.html', 'admin', 'Product', 'index', 'GET', 'a:0:{}', 1523264074);
 INSERT INTO `book_web_log_001` VALUES (53, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/product/index.html', 'admin', 'Product', 'index', 'GET', 'a:0:{}', 1523267226);
+INSERT INTO `book_web_log_001` VALUES (54, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/product/index.html', 'admin', 'Product', 'index', 'GET', 'a:0:{}', 1523325031);
+INSERT INTO `book_web_log_001` VALUES (55, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/product/index.html', 'admin', 'Product', 'index', 'GET', 'a:0:{}', 1523325382);
+INSERT INTO `book_web_log_001` VALUES (56, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin.html', 'admin', 'Index', 'index', 'GET', 'a:0:{}', 1523332051);
+INSERT INTO `book_web_log_001` VALUES (57, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/index/welcome.html', 'admin', 'Index', 'welcome', 'GET', 'a:0:{}', 1523332052);
+INSERT INTO `book_web_log_001` VALUES (58, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/recommend/index.html', 'admin', 'Recommend', 'index', 'GET', 'a:0:{}', 1523332421);
+INSERT INTO `book_web_log_001` VALUES (59, 0, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin.html', 'admin', 'Index', 'index', 'GET', 'a:0:{}', 1524125387);
+INSERT INTO `book_web_log_001` VALUES (60, 0, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/pub/login.html', 'admin', 'Pub', 'login', 'GET', 'a:0:{}', 1524125387);
+INSERT INTO `book_web_log_001` VALUES (61, 0, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/pub/checklogin.html', 'admin', 'Pub', 'checklogin', 'POST', 'a:3:{s:7:\"account\";s:5:\"admin\";s:8:\"password\";s:6:\"123456\";s:7:\"captcha\";s:4:\"u24q\";}', 1524125404);
+INSERT INTO `book_web_log_001` VALUES (62, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/index/index.html', 'admin', 'Index', 'index', 'GET', 'a:0:{}', 1524125404);
+INSERT INTO `book_web_log_001` VALUES (63, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/index/welcome.html', 'admin', 'Index', 'welcome', 'GET', 'a:0:{}', 1524125405);
+INSERT INTO `book_web_log_001` VALUES (64, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/Admin/type/index.html', 'admin', 'Type', 'index', 'GET', 'a:0:{}', 1524125414);
+INSERT INTO `book_web_log_001` VALUES (65, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/type/add.html', 'admin', 'Type', 'add', 'GET', 'a:0:{}', 1524125430);
+INSERT INTO `book_web_log_001` VALUES (66, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/order/index.html', 'admin', 'Order', 'index', 'GET', 'a:0:{}', 1524125476);
+INSERT INTO `book_web_log_001` VALUES (67, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/focus/index.html', 'admin', 'Focus', 'index', 'GET', 'a:0:{}', 1524125513);
+INSERT INTO `book_web_log_001` VALUES (68, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/focus/add.html', 'admin', 'Focus', 'add', 'GET', 'a:0:{}', 1524125600);
+INSERT INTO `book_web_log_001` VALUES (69, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/Admin/type/index.html', 'admin', 'Type', 'index', 'GET', 'a:0:{}', 1524136560);
+INSERT INTO `book_web_log_001` VALUES (70, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/type/add.html', 'admin', 'Type', 'add', 'GET', 'a:0:{}', 1524136563);
+INSERT INTO `book_web_log_001` VALUES (71, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/product/index.html', 'admin', 'Product', 'index', 'GET', 'a:0:{}', 1524136848);
+INSERT INTO `book_web_log_001` VALUES (72, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/order/index.html', 'admin', 'Order', 'index', 'GET', 'a:0:{}', 1524136848);
+INSERT INTO `book_web_log_001` VALUES (73, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/focus/index.html', 'admin', 'Focus', 'index', 'GET', 'a:0:{}', 1524136850);
+INSERT INTO `book_web_log_001` VALUES (74, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/feed_back/index.html', 'admin', 'FeedBack', 'index', 'GET', 'a:0:{}', 1524136850);
+INSERT INTO `book_web_log_001` VALUES (75, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/recommend/index.html', 'admin', 'Recommend', 'index', 'GET', 'a:0:{}', 1524136851);
+INSERT INTO `book_web_log_001` VALUES (76, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/Admin/user/index.html', 'admin', 'User', 'index', 'GET', 'a:0:{}', 1524136853);
+INSERT INTO `book_web_log_001` VALUES (77, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/product/index.html', 'admin', 'Product', 'index', 'GET', 'a:0:{}', 1524136855);
+INSERT INTO `book_web_log_001` VALUES (78, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/Admin/type/index.html', 'admin', 'Type', 'index', 'GET', 'a:0:{}', 1524136855);
+INSERT INTO `book_web_log_001` VALUES (79, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/product/index.html', 'admin', 'Product', 'index', 'GET', 'a:0:{}', 1524136856);
+INSERT INTO `book_web_log_001` VALUES (80, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/Admin/type/index.html', 'admin', 'Type', 'index', 'GET', 'a:0:{}', 1524136860);
+INSERT INTO `book_web_log_001` VALUES (81, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/product/index.html', 'admin', 'Product', 'index', 'GET', 'a:0:{}', 1524136861);
+INSERT INTO `book_web_log_001` VALUES (82, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/product/add.html', 'admin', 'Product', 'add', 'GET', 'a:0:{}', 1524137104);
+INSERT INTO `book_web_log_001` VALUES (83, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/focus/index.html', 'admin', 'Focus', 'index', 'GET', 'a:0:{}', 1524137376);
+INSERT INTO `book_web_log_001` VALUES (84, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/focus/add.html', 'admin', 'Focus', 'add', 'GET', 'a:0:{}', 1524137377);
+INSERT INTO `book_web_log_001` VALUES (85, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/recommend/index.html', 'admin', 'Recommend', 'index', 'GET', 'a:0:{}', 1524137899);
+INSERT INTO `book_web_log_001` VALUES (86, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/recommend/index.html', 'admin', 'Recommend', 'index', 'GET', 'a:0:{}', 1524143619);
+INSERT INTO `book_web_log_001` VALUES (87, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/recommend/index.html', 'admin', 'Recommend', 'index', 'GET', 'a:0:{}', 1524143621);
+INSERT INTO `book_web_log_001` VALUES (88, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/index/index.html', 'admin', 'Index', 'index', 'GET', 'a:0:{}', 1524191078);
+INSERT INTO `book_web_log_001` VALUES (89, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/index/welcome.html', 'admin', 'Index', 'welcome', 'GET', 'a:0:{}', 1524191085);
+INSERT INTO `book_web_log_001` VALUES (90, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/product/index.html', 'admin', 'Product', 'index', 'GET', 'a:0:{}', 1524194166);
+INSERT INTO `book_web_log_001` VALUES (91, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/focus/index.html', 'admin', 'Focus', 'index', 'GET', 'a:0:{}', 1524194170);
 
 -- ----------------------------
 -- Table structure for book_web_log_all
@@ -754,5 +826,43 @@ INSERT INTO `book_web_log_all` VALUES (50, 1, '127.0.0.1', '本机地址 本机�
 INSERT INTO `book_web_log_all` VALUES (51, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/product/index.html', 'admin', 'Product', 'index', 'GET', 'a:0:{}', 1523258497);
 INSERT INTO `book_web_log_all` VALUES (52, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/product/index.html', 'admin', 'Product', 'index', 'GET', 'a:0:{}', 1523264074);
 INSERT INTO `book_web_log_all` VALUES (53, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/product/index.html', 'admin', 'Product', 'index', 'GET', 'a:0:{}', 1523267226);
+INSERT INTO `book_web_log_all` VALUES (54, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/product/index.html', 'admin', 'Product', 'index', 'GET', 'a:0:{}', 1523325031);
+INSERT INTO `book_web_log_all` VALUES (55, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/product/index.html', 'admin', 'Product', 'index', 'GET', 'a:0:{}', 1523325382);
+INSERT INTO `book_web_log_all` VALUES (56, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin.html', 'admin', 'Index', 'index', 'GET', 'a:0:{}', 1523332051);
+INSERT INTO `book_web_log_all` VALUES (57, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/index/welcome.html', 'admin', 'Index', 'welcome', 'GET', 'a:0:{}', 1523332052);
+INSERT INTO `book_web_log_all` VALUES (58, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/recommend/index.html', 'admin', 'Recommend', 'index', 'GET', 'a:0:{}', 1523332421);
+INSERT INTO `book_web_log_all` VALUES (59, 0, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin.html', 'admin', 'Index', 'index', 'GET', 'a:0:{}', 1524125387);
+INSERT INTO `book_web_log_all` VALUES (60, 0, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/pub/login.html', 'admin', 'Pub', 'login', 'GET', 'a:0:{}', 1524125387);
+INSERT INTO `book_web_log_all` VALUES (61, 0, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/pub/checklogin.html', 'admin', 'Pub', 'checklogin', 'POST', 'a:3:{s:7:\"account\";s:5:\"admin\";s:8:\"password\";s:6:\"123456\";s:7:\"captcha\";s:4:\"u24q\";}', 1524125404);
+INSERT INTO `book_web_log_all` VALUES (62, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/index/index.html', 'admin', 'Index', 'index', 'GET', 'a:0:{}', 1524125404);
+INSERT INTO `book_web_log_all` VALUES (63, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/index/welcome.html', 'admin', 'Index', 'welcome', 'GET', 'a:0:{}', 1524125405);
+INSERT INTO `book_web_log_all` VALUES (64, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/Admin/type/index.html', 'admin', 'Type', 'index', 'GET', 'a:0:{}', 1524125414);
+INSERT INTO `book_web_log_all` VALUES (65, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/type/add.html', 'admin', 'Type', 'add', 'GET', 'a:0:{}', 1524125430);
+INSERT INTO `book_web_log_all` VALUES (66, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/order/index.html', 'admin', 'Order', 'index', 'GET', 'a:0:{}', 1524125476);
+INSERT INTO `book_web_log_all` VALUES (67, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/focus/index.html', 'admin', 'Focus', 'index', 'GET', 'a:0:{}', 1524125513);
+INSERT INTO `book_web_log_all` VALUES (68, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/focus/add.html', 'admin', 'Focus', 'add', 'GET', 'a:0:{}', 1524125600);
+INSERT INTO `book_web_log_all` VALUES (69, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/Admin/type/index.html', 'admin', 'Type', 'index', 'GET', 'a:0:{}', 1524136560);
+INSERT INTO `book_web_log_all` VALUES (70, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/type/add.html', 'admin', 'Type', 'add', 'GET', 'a:0:{}', 1524136563);
+INSERT INTO `book_web_log_all` VALUES (71, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/product/index.html', 'admin', 'Product', 'index', 'GET', 'a:0:{}', 1524136848);
+INSERT INTO `book_web_log_all` VALUES (72, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/order/index.html', 'admin', 'Order', 'index', 'GET', 'a:0:{}', 1524136848);
+INSERT INTO `book_web_log_all` VALUES (73, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/focus/index.html', 'admin', 'Focus', 'index', 'GET', 'a:0:{}', 1524136850);
+INSERT INTO `book_web_log_all` VALUES (74, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/feed_back/index.html', 'admin', 'FeedBack', 'index', 'GET', 'a:0:{}', 1524136850);
+INSERT INTO `book_web_log_all` VALUES (75, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/recommend/index.html', 'admin', 'Recommend', 'index', 'GET', 'a:0:{}', 1524136851);
+INSERT INTO `book_web_log_all` VALUES (76, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/Admin/user/index.html', 'admin', 'User', 'index', 'GET', 'a:0:{}', 1524136853);
+INSERT INTO `book_web_log_all` VALUES (77, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/product/index.html', 'admin', 'Product', 'index', 'GET', 'a:0:{}', 1524136855);
+INSERT INTO `book_web_log_all` VALUES (78, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/Admin/type/index.html', 'admin', 'Type', 'index', 'GET', 'a:0:{}', 1524136855);
+INSERT INTO `book_web_log_all` VALUES (79, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/product/index.html', 'admin', 'Product', 'index', 'GET', 'a:0:{}', 1524136856);
+INSERT INTO `book_web_log_all` VALUES (80, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/Admin/type/index.html', 'admin', 'Type', 'index', 'GET', 'a:0:{}', 1524136860);
+INSERT INTO `book_web_log_all` VALUES (81, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/product/index.html', 'admin', 'Product', 'index', 'GET', 'a:0:{}', 1524136861);
+INSERT INTO `book_web_log_all` VALUES (82, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/product/add.html', 'admin', 'Product', 'add', 'GET', 'a:0:{}', 1524137104);
+INSERT INTO `book_web_log_all` VALUES (83, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/focus/index.html', 'admin', 'Focus', 'index', 'GET', 'a:0:{}', 1524137376);
+INSERT INTO `book_web_log_all` VALUES (84, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/focus/add.html', 'admin', 'Focus', 'add', 'GET', 'a:0:{}', 1524137377);
+INSERT INTO `book_web_log_all` VALUES (85, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/recommend/index.html', 'admin', 'Recommend', 'index', 'GET', 'a:0:{}', 1524137899);
+INSERT INTO `book_web_log_all` VALUES (86, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/recommend/index.html', 'admin', 'Recommend', 'index', 'GET', 'a:0:{}', 1524143619);
+INSERT INTO `book_web_log_all` VALUES (87, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/recommend/index.html', 'admin', 'Recommend', 'index', 'GET', 'a:0:{}', 1524143621);
+INSERT INTO `book_web_log_all` VALUES (88, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/index/index.html', 'admin', 'Index', 'index', 'GET', 'a:0:{}', 1524191078);
+INSERT INTO `book_web_log_all` VALUES (89, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/index/welcome.html', 'admin', 'Index', 'welcome', 'GET', 'a:0:{}', 1524191085);
+INSERT INTO `book_web_log_all` VALUES (90, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/product/index.html', 'admin', 'Product', 'index', 'GET', 'a:0:{}', 1524194166);
+INSERT INTO `book_web_log_all` VALUES (91, 1, '127.0.0.1', '本机地址 本机地址  ', 'Windows 10', 'Chrome(63.0.3239.108)', 'http://admin.lingbook.com/admin/focus/index.html', 'admin', 'Focus', 'index', 'GET', 'a:0:{}', 1524194170);
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -24,7 +24,7 @@ AppAsset::register($this);
     <meta name="keywords" content="小说传记,青春文学,童书,绘本,成功励志,投资理财,东野圭吾,考研英语,人类简史,小巧玲珑书吧图书,网上购书">
     <meta name="description" content="小巧玲珑书吧-全球最大中文网上书店,专业提供小说传记,青春文学,成功励志,投资理财等各品类图书畅销榜最新报价、促销、评论信息,引领最新网上购书体验!">
 
-    <link rel="shortcut icon" href="http://i1.mobile-dad.com/uploads/201708/512349_1_1501844093qtY7.png"/>
+    <link rel="shortcut icon" href="/images/timg.jpg"/>
     <link rel="stylesheet" type="text/css" href="/css/theme_1.css">
     <link rel="Stylesheet" type="text/css" href="/css/home.css">
     <link rel="Stylesheet" type="text/css" href="/css/index.css">
@@ -47,7 +47,7 @@ AppAsset::register($this);
                         </ul>
                         <div class="new_head_znx" id="znx_content" style="display:none;"></div>
                         <div class="ddnewhead_welcome" display="none;">
-                            <span id="nickname">请<a dd_name="登录" href="?r=site/login" target="_self" rel="nofollow" class="login_link">登录</a><a dd_name="成为会员" href="?r=site/Register" target="_self" rel="nofollw">成为书吧的一员</a></span>
+                            <span id="nickname">请<a dd_name="登录" href="?r=site/login" target="_self" rel="nofollow" class="login_link">登录</a><a dd_name="成为会员" href="?r=site/register" target="_self" rel="nofollw">成为书吧的一员</a></span>
                         </div>
                     </div>
                     <div class="welcome">
@@ -120,7 +120,57 @@ AppAsset::register($this);
     </div>
 </div>
 
+
 <footer class="footer">
+    <div class="container visible-lg-block">
+        <div class="row">
+            <div class="col-lg-2">
+                <h2><i class="fa fa-info-circle"></i> 购物指南</h2>
+                <ul>
+                    <li>购物流程</li>
+                    <li>发票制度</li>
+                    <li>账户管理</li>
+                    <li>会员优惠</li>
+                </ul>
+            </div>
+            <div class="col-lg-2">
+                <h2><i class="fa fa-info-circle"></i>支付方式</h2>
+                <ul>
+                    <li>货到付款</li>
+                    <li>网上支付</li>
+                    <li>礼品卡支付</li>
+                    <li>银行转帐</li>
+                </ul>
+            </div>
+            <div class="col-lg-2">
+                <h2><i class="fa fa-info-circle"></i>订单服务</h2>
+                <ul>
+                    <li>配送服务查询</li>
+                    <li>订单状态说明</li>
+                    <li>自助取消订单</li>
+                    <li>自助修改订单</li>
+                </ul>
+            </div>
+            <div class="col-lg-3">
+                <h2><i class="fa fa-info-circle"></i>配送方式</h2>
+                <ul>
+                    <li>当日递</li>
+                    <li>次日达</li>
+                    <li>订单自提</li>
+                    <li>验货与签收</li>
+                </ul>
+            </div>
+
+            <div class="col-lg-3">
+                <h2><i class="fa fa-share-alt"></i><a target="_blank" href="?r=site/about">关于我们</a></h2>
+                <dl>
+                    <dt><i class="fa fa-github"></i> 小巧玲珑书吧 China GitHub 仓库</dt>
+                    <dd><a href="https://github.com/YouRong-ling/xql_bookbar">https://github.com/YouRong-ling/xql_bookbar</a></dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    <hr>
     <div class="container">
         <p class="pull-left"><?= date('Y-m-d') ?> &copy; “莫笑吾家巷壁小，稜层势欲摩空。相知唯有主人翁，有心雄泰华，无意巧玲珑。” </p>
         <p class="pull-right">Powered by www.xql.com</p>
