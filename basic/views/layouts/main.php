@@ -29,6 +29,7 @@ AppAsset::register($this);
     <link rel="Stylesheet" type="text/css" href="/css/home.css">
     <link rel="Stylesheet" type="text/css" href="/css/index.css">
     <link rel="Stylesheet" type="text/css" href="/css/header.css">
+    <link rel="stylesheet" href="/css/swiper-4.2.2.min.css">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
@@ -40,19 +41,31 @@ AppAsset::register($this);
         <div id="tools">
             <div class="tools">
                 <div class="ddnewhead_operate" dd_name="顶链接">
-                    <div>
-                        <ul class="ddnewhead_operate_nav">
-                            <li><a target="_blank" href="?r=site/about">关于我们</a></li>
-                            <li><a target="_blank" href="?r=site/contact">建议箱</a></li>
-                        </ul>
-                        <div class="new_head_znx" id="znx_content" style="display:none;"></div>
-                        <div class="ddnewhead_welcome" display="none;">
-                            <span id="nickname">请<a dd_name="登录" href="?r=site/login" target="_self" rel="nofollow" class="login_link">登录</a><a dd_name="成为会员" href="?r=site/register" target="_self" rel="nofollw">成为书吧的一员</a></span>
-                        </div>
-                    </div>
-                    <div class="welcome">
-                        欢迎光临，小巧玲珑书吧
-                    </div>
+                        <?php
+                        NavBar::begin([
+                            'brandLabel' => '欢迎光临，小巧玲珑书吧',
+                            'brandUrl' => Yii::$app->homeUrl,
+                            'options' => [
+                                'class' => 'welcome',
+                            ],
+                        ]);
+                        echo Nav::widget([
+                            'options' => ['class' => 'navbar-nav navbar-right'],
+                            'items' => [
+//                                ['label' => 'Home', 'url' => ['/site/index']],
+                                Yii::$app->user->isGuest ?
+                                    ['label' => '成为书吧的一员', 'url' => ['/site/register']]:"",
+                                Yii::$app->user->isGuest ?
+                                    ['label' => '登录', 'url' => ['/site/login']] :
+                                    ['label' => '退出 (' . Yii::$app->user->identity->username . ')',
+                                        'url' => ['/site/logout'],
+                                        'linkOptions' => ['data-method' => 'post']],
+                                    ['label' => '关于我们', 'url' => ['/site/about']],
+                                    ['label' => '建议箱', 'url' => ['/site/contact']],
+                            ],
+                        ]);
+                        NavBar::end();
+                        ?>
                 </div>
             </div>
         </div>
@@ -85,23 +98,21 @@ AppAsset::register($this);
             </div>
         </div>
         <div class="nav_top" dd_name="一级导航条">
-            <div class="nav_top">
-                <ul>
-                    <li class="all"><a href="/" id="a_category" name="cate" class="sort_button" onmouseover="showCategory('a_category','__ddnav_sort','//static.dangdang.com/js/header2012/categorydata_new.js?20180115');" onmouseout="closeCategory('__ddnav_sort');" dd_name="全部商品分类" target="_blank">全部商品分类</a></li>
-                    <?php
-                    $type = (new \yii\db\Query())
-                        ->select('`id`,`title`')
-                        ->from('book_type')
-                        ->where(['status' => 1])
-                        ->orderBy(['sort'=>'desc'])
-                        ->limit(10)
-                        ->all();
-                    foreach ($type as $v){
-                        echo '<li><a name="nav1" href="?type='.$v['id'].'" target="_blank">'.$v['title'].'</a></li>';
-                    }
-                    ?>
-                </ul>
-            </div>
+            <ul>
+                <li class="all"><a href="/" id="a_category" name="cate" class="sort_button" onmouseover="showCategory('a_category','__ddnav_sort','//static.dangdang.com/js/header2012/categorydata_new.js?20180115');" onmouseout="closeCategory('__ddnav_sort');" dd_name="全部商品分类" target="_blank">全部商品分类</a></li>
+                <?php
+                $type = (new \yii\db\Query())
+                    ->select('`id`,`title`')
+                    ->from('book_type')
+                    ->where(['status' => 1])
+                    ->orderBy(['sort'=>'desc'])
+                    ->limit(10)
+                    ->all();
+                foreach ($type as $v){
+                    echo '<li><a name="title" href="?type='.$v['id'].'" target="_blank">'.$v['title'].'</a></li>';
+                }
+                ?>
+            </ul>
         </div>
 
         <div class="sub">

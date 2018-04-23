@@ -23,7 +23,7 @@ class User extends Base
     }
 
     /**
-     * 平台用户管理列表
+     * 用户管理列表
      * @return string
      */
     public function index(){
@@ -45,22 +45,22 @@ class User extends Base
     }
 
     /**
-     * 平台用户详细信息
+     * 用户详细信息
      *
      */
     public function view()
     {
-        $pm_uid = Request::instance()->get('id');
-        if(empty($pm_uid))
+        $id = Request::instance()->get('id');
+        if(empty($id))
             return \think\Response::create(\think\Url::build('/admin/User'), 'redirect');
 
         //基本信息
         $field = '*';
-        $list = Db::name('User')->field($field)
-                    ->where(['pm_uid'=>$pm_uid])
+        $list = Db::name('user')->field($field)
+                    ->where(['id'=>$id])
                     ->find();
 
-        $this->assign('list',$list);
+        $this->view->assign('list',$list);
         return $this->view->fetch();
     }
 }

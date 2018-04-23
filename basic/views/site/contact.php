@@ -9,10 +9,9 @@ use yii\bootstrap\ActiveForm;
 use yii\captcha\Captcha;
 
 $this->title();
-$this->params['breadcrumbs'][] = "建议箱";
 ?>
 <div class="site-contact">
-    <h1>反馈信息收集</h1>
+    <h4>建议箱</h4>
 
     <?php if (Yii::$app->session->hasFlash('contactFormSubmitted')): ?>
 
@@ -34,34 +33,25 @@ $this->params['breadcrumbs'][] = "建议箱";
     <?php else: ?>
 
         <p>
-            “小巧玲珑书吧”带你有什么困扰吗？若有请及时反馈，尽快处理。若有什么好的意见、好的作品，也可以投稿哦！会在网站展出的哦！
+            “小巧玲珑书吧”带给您有什么困扰吗？若有请及时反馈，尽快处理。若有什么好的意见、好的作品，也可以投稿哦！会在网站展出的哦！
         </p>
 
         <div class="row">
             <div class="col-lg-5">
 
                 <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
-
                     <?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
-
                     <?= $form->field($model, 'email') ?>
-
-                    <?= $form->field($model, 'subject') ?>
-
-                    <?= $form->field($model, 'body')->textarea(['rows' => 6]) ?>
-
+                    <?= $form->field($model, 'mobile') ?>
+                    <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
                     <?= $form->field($model, 'verifyCode')->widget(Captcha::className(), [
                         'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
                     ]) ?>
-
                     <div class="form-group">
                         <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
                     </div>
-
                 <?php ActiveForm::end(); ?>
-
             </div>
         </div>
-
     <?php endif; ?>
 </div>

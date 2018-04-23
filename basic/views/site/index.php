@@ -3,20 +3,25 @@
 /* @var $this yii\web\View
  * @1013753944@qq.com
  */
-
+use yii\helpers\Html;
 $this->title();
 ?>
-<div class="site-index">
-    <div class="row">
+<div class="swiper-container">
+    <div class="swiper-wrapper">
         <?php foreach($focus as $v){ ?>
-        <a href="<?=$v['ad_url']?>">
-            <img class="col-lg-12" src="http://admin.lingbook.com<?=$v['img']?>" title="<?=$v['ad_name']?>" alt="<?=$v['ad_name'] ?>">
-        </a>
+            <div class="swiper-slide">
+                 <a href="<?=$v['ad_url']?>">
+                     <img class="col-lg-12" src="http://admin.lingbook.com<?=$v['img']?>" title="<?=$v['ad_name']?>" alt="<?=$v['ad_name'] ?>">
+                </a>
+            </div>
         <?php } ?>
     </div>
+</div>
+
+<div class="site-index">
 
     <?php foreach($product as $k=>$v){ ?>
-    <div class="body-content border-b">
+    <div class="border-b">
         <h3><img class="img-re" src="/images/s9_title._CB335300127_.png" /><?=$k ?></h3>
     </div>
     <div class="body-content">
@@ -33,3 +38,9 @@ $this->title();
     </div>
     <?php } ?>
 </div>
+<script src="/js/swiper-4.2.2.min.js"></script>
+<script>
+    var mySwiper = new Swiper('.swiper-container', {
+        autoplay: true,//可选选项，自动滑动
+    })
+</script>

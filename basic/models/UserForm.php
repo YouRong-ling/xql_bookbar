@@ -11,10 +11,15 @@ use yii\base\Model;
  * @property User|null $user This property is read-only.
  *
  */
-class LoginForm extends Model
+class UserForm extends Model
 {
     public $username;
     public $password;
+    public $realname;
+    public $email;
+    public $mobile;
+    public $sex;
+    public $verifyCode;
     public $rememberMe = true;
 
     private $_user = false;
@@ -27,13 +32,14 @@ class LoginForm extends Model
     {
         return [
             // username and password are both required
-            [['username', 'password'], 'required','message'=>'{attribute}不能为空！'],
+            [['username', 'password','mobile','email','verifyCode'], 'required','message'=>'{attribute}不能为空！'],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
-            ['password', 'validatePassword'],
+//            ['password', 'validatePassword'],
             ['username', 'string', 'max' => 50,'tooLong'=>'{attribute}长度必需在100以内'],
             ['password', 'string', 'max' => 32,'tooLong'=>'{attribute}长度必需在32以内'],
+            ['mobile', 'string', 'max' => 11,'tooLong'=>'{attribute}长度必需在11位'],
             ['password','validatePassword','message'=>'账号或密码不正确！'],
         ];
     }
@@ -67,19 +73,6 @@ class LoginForm extends Model
                 $this->addError($attribute, '账号或密码不正确.');
             }
         }
-    }
-
-    /**
-     * Logs in a user using the provided username and password.
-     * @return bool whether the user is logged in successfully
-     */
-    public function login()
-    {
-        if ($this->validate()) {
-
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
-        }
-        return false;
     }
 
     /**

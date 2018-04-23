@@ -10,9 +10,7 @@ use yii\bootstrap\ActiveForm;
 $this->title();
 ?>
 <div class="site-login">
-    <h1>登录</h1>
-
-    <p>Please fill out the following fields to login:</p>
+    <h3>登录</h3>
 
     <?php $form = ActiveForm::begin([
         'id' => 'login-form',

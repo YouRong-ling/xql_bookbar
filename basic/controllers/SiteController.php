@@ -9,6 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\UserForm;
 
 class SiteController extends Controller
 {
@@ -72,7 +73,7 @@ class SiteController extends Controller
             ->from('book_focus')
             ->where(['status' => 1,'ad_type'=>1,'ad_place'=>1])
             ->orderBy('id desc')
-            ->limit(1)
+            ->limit(3)
             ->all();
         foreach($data['focus'] as $k=>$v){
             $data['focus'][$k]['img'] = (new \yii\db\Query())
@@ -101,9 +102,10 @@ class SiteController extends Controller
                 ->select('`name`')->from('book_file')->where(['id' => $v['img']])->column()[0];
             $data['product'][$recommend[$v['is_top']]][] = $v;
         }
-
 //        var_dump($data['product']);
 
+//        $user=User::find(1)->one();
+//        echo $user->user."login";
         return $this->render('index',$data);
     }
 
@@ -114,13 +116,19 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+
+            if ($model->validate()) {
+                //验证通过，执行用户登录
+                if($model->login()){
+                    return $this->goHome();
+                }else{
+                    return $this->render('login',['model'=>$model]);
+                }
+
+            }
+//            return $this->goBack();
         }
         return $this->render('login', [
             'model' => $model,
@@ -134,13 +142,25 @@ class SiteController extends Controller
      */
     public function actionRegister()
     {
-//        Yii::$app->db->createCommand()->insert('user', [
-//            'name' => 'test',
-//            'age' => 30,
-//        ])->execute();
+        $model = new UserForm();
+        if ($model->load(Yii::$app->request->post())) {
 
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            $param = Yii::$app->request->post()["UserForm"];
+
+//            var_dump($param);exit;
+
+            $data['username'] = $param['username'];
+            $data['password'] = md5($param['password']);
+            $data['realname'] = $param['realname'];
+            $data['mobile'] = $param['mobile'];
+            $data['email'] = $param['email'];
+            $data['reg_ip'] = $_SERVER['SERVER_ADDR'];
+            $data['reg_time'] = time();
+            $data['login'] = 1;
+            $data['last_login_ip'] = $_SERVER['SERVER_ADDR'];
+            $data['last_login_time'] = time();
+            Yii::$app->db->createCommand()->insert('book_user', $data)->execute();
+
             return $this->goBack();
         }
         return $this->render('register', [
@@ -168,10 +188,26 @@ class SiteController extends Controller
     public function actionContact()
     {
         $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
+        if ($model->load(Yii::$app->request->post())) {
+            $param = Yii::$app->request->post()['ContactForm'];
 
-            return $this->refresh();
+//            var_dump($param);exit;
+
+//            $db->createCommand('INSERT INTO book_feedback (name) VALUES (:name)', [
+//                ':name' => 'Qiaoling',])->execute();
+
+            $data['fb_name'] = $param['name'];
+            $data['fb_email'] = $param['email'];
+            $data['fb_mobile'] = $param['mobile'];
+            $data['fb_content'] = $param['content'];
+            $data['fb_m_uid'] = $param['name'];
+            $data['fb_type'] = 1;
+            $data['fb_place'] = 1;
+            $data['fb_create_time'] = time();
+            Yii::$app->db->createCommand()->insert('book_feedback', $data)->execute();
+
+//            Yii::$app->session->setFlash('contactFormSubmitted');
+            return $this->goHome();
         }
         return $this->render('contact', [
             'model' => $model,
@@ -186,5 +222,30 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+
+    /**
+     * 购物车
+     *
+     * @return Response|string
+     */
+    public function actionCart()
+    {
+
+
+        return $this->render('cart');
+    }
+
+    /**
+     * 订单
+     *
+     * @return Response|string
+     */
+    public function actionOrder()
+    {
+
+
+        return $this->render('Order');
     }
 }

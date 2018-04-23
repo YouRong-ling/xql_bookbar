@@ -1,8 +1,8 @@
 html,
 body {
+	margin: 0; padding: 0; list-style-type: none;
     height: 100%;
 }
-
 .wrap {
     min-height: 100%;
     height: auto;
@@ -156,15 +156,15 @@ a.desc:after {
 	 top:-3px;
 	 width:30px;
 }
+.body-content{
 
+}
 .body-content .row{
-	width:1150px;
 	 border:1px solid #e5e5e5;
 	 border-top: 1px solid #008a00;
-	
 }
 .body-content .back-f{
-    margin:4px 1px 4px 16px;
+    margin:10px 13px 7px 22px;
 	border-right:1px solid #e6e6e6;
 	background-color:#EEC;
 }
@@ -202,7 +202,7 @@ a.desc:after {
     padding:5px 5px;
     text-align:center;
 	margin-bottom:16px;
-	background-color:#E518;
+	background-color:#E22;
 	
 }
 .body-content .cart-t a{
@@ -212,3 +212,8 @@ a.desc:after {
     font-size: 13px;
 }
 
+.p-css{
+    text-indent:2em;
+    font:14px/40px "Microsoft Yahei";
+    color:#777;
+}
