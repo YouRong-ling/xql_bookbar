@@ -60,6 +60,11 @@ AppAsset::register($this);
                                     ['label' => '退出 (' . Yii::$app->user->identity->username . ')',
                                         'url' => ['/site/logout'],
                                         'linkOptions' => ['data-method' => 'post']],
+                                    ['label' => '小说投稿', 'url' => ['/site/index']],
+                                    ['label' => '我要出书', 'url' => ['/site/index']],
+                                    ['label' => '企业采购', 'url' => ['/site/index']],
+                                    ['label' => '我的云书房', 'url' => ['/site/index']],
+                                    ['label' => '客户服务', 'url' => ['/site/index']],
                                     ['label' => '关于我们', 'url' => ['/site/about']],
                                     ['label' => '建议箱', 'url' => ['/site/contact']],
                             ],
@@ -86,9 +91,9 @@ AppAsset::register($this);
                     <div class="search_hot">热搜:
                         <a href="?hotword=东野圭吾" name="hotword">东野圭吾</a>
                         <a href="?hotword=阿加莎克里斯蒂" name="hotword">阿加莎克里斯蒂</a>
-                        <a href="?hotword=白夜行" name="hotword">白夜行</a>
+                        <a href="?hotword=村上春树" name="hotword">村上春树</a>
                     </div>
-                    <a href="#" class="search_advs" target="_blank" name="ddnav_adv_s" dd_name="高级搜索">高级搜索</a>
+                    <a href="#" class="search_advs" name="ddnav_adv_s" dd_name="高级搜索">高级搜索</a>
                 </div>
                 <div id="suggest_key" class="suggest_key" style="display:none;"></div>
                 <div class="ddnew_cart"><a name="购物车" href="?r=site/cart" dd_name="购物车"><i class="icon_card"></i>购物车<b id="cart_items_count">0</b></a></div>

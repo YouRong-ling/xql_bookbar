@@ -57,15 +57,26 @@ class SiteController extends Controller
 
     /**
      * 首页
+     * //        $typedata = Yii::$app->db->createCommand('SELECT `id`,`title` FROM book_type')->queryAll();
+    //        Yii::$app->db->createCommand()->update('user', ['age' => 40], 'name = test')->execute();
+    //        Yii::$app->db->createCommand()->delete('user', 'age = 30')->execute();
+    //        var_dump($typedata);exit;
      *
      * @return string
      */
     public function actionIndex()
     {
-//        $typedata = Yii::$app->db->createCommand('SELECT `id`,`title` FROM book_type')->queryAll();
-//        Yii::$app->db->createCommand()->update('user', ['age' => 40], 'name = test')->execute();
-//        Yii::$app->db->createCommand()->delete('user', 'age = 30')->execute();
-//        var_dump($typedata);exit;
+        var_dump(Yii::$app->user);exit;
+        $view = 'index';
+        $param = [];
+        if(Yii::$app->request->get())
+        {
+            $param['author'] = Yii::$app->request->get('hotword','')?Yii::$app->request->get('hotword'):"";
+            $param['type'] = Yii::$app->request->get('type','');
+//            var_dump($param);exit;
+            $param = array_filter($param);
+            $view = 'list';
+        }
 
         //焦点图
         $data['focus'] = (new \yii\db\Query())
@@ -87,7 +98,6 @@ class SiteController extends Controller
             ->where(['status' => 1])
             ->all();
        $recommend = array_column($recommend,'title','id');
-
 //        var_dump($recommend);
 
         //模块 -》 商品
@@ -95,18 +105,21 @@ class SiteController extends Controller
             ->select('`id`,`title`,price,sale_price,type,img,soldnum,is_top')
             ->from('book_product')
             ->where(['status' => 1])
+            ->where($param)
+            ->orderBy('is_top desc')
 //            ->limit(10)
             ->all();
-        foreach($tmp as $v){
-            $v['img'] = (new \yii\db\Query())
-                ->select('`name`')->from('book_file')->where(['id' => $v['img']])->column()[0];
-            $data['product'][$recommend[$v['is_top']]][] = $v;
+        $data['product'] = [];
+        if($tmp){
+            foreach($tmp as $v){
+                $v['img'] = (new \yii\db\Query())
+                    ->select('`name`')->from('book_file')->where(['id' => $v['img']])->column()[0];
+                $data['product'][$recommend[$v['is_top']]][] = $v;
+            }
         }
-//        var_dump($data['product']);
 
-//        $user=User::find(1)->one();
-//        echo $user->user."login";
-        return $this->render('index',$data);
+//        var_dump($data['product']);
+        return $this->render($view,$data);
     }
 
     /**
@@ -117,19 +130,21 @@ class SiteController extends Controller
     public function actionLogin()
     {
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        if ($model->load(Yii::$app->request->post())) {
 
             if ($model->validate()) {
                 //验证通过，执行用户登录
                 if($model->login()){
+
                     return $this->goHome();
                 }else{
                     return $this->render('login',['model'=>$model]);
                 }
-
             }
-//            return $this->goBack();
+
+            return $this->goBack();
         }
+
         return $this->render('login', [
             'model' => $model,
         ]);
@@ -153,6 +168,8 @@ class SiteController extends Controller
             $data['password'] = md5($param['password']);
             $data['realname'] = $param['realname'];
             $data['mobile'] = $param['mobile'];
+            $data['authKey'] = mb_substr($param['mobile'],0,4,'utf-8').'ling0';
+            $data['accessToken'] = md5($param['password'].mb_substr($param['mobile'],0,4,'utf-8'));
             $data['email'] = $param['email'];
             $data['reg_ip'] = $_SERVER['SERVER_ADDR'];
             $data['reg_time'] = time();
