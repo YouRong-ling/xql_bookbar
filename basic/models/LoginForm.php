@@ -92,6 +92,8 @@ class LoginForm extends Model
         if ($this->_user === false) {
 //            $this->_user= User::find()->where(['username'=>$this->user,'password'=>md5($this->password)])->one();
             $this->_user = User::findByUsername($this->username);
+            $session = \Yii::$app->session;
+            $session->set('session_username',$this->_user);
         }
 
         return $this->_user;

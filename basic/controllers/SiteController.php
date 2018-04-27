@@ -66,7 +66,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        var_dump(Yii::$app->user);exit;
+//        var_dump(Yii::$app->user);exit;
         $view = 'index';
         $param = [];
         if(Yii::$app->request->get())
@@ -87,7 +87,7 @@ class SiteController extends Controller
             ->limit(3)
             ->all();
         foreach($data['focus'] as $k=>$v){
-            $data['focus'][$k]['img'] = (new \yii\db\Query())
+            $data['focus'][$k]['img'] = Yii::$app->params['imgUrl'].(new \yii\db\Query())
                 ->select('`name`')->from('book_file')->where(['id' => $v['ad_img_key']])->column()[0];
         }
 //        var_dump($data['focus']);
@@ -112,12 +112,11 @@ class SiteController extends Controller
         $data['product'] = [];
         if($tmp){
             foreach($tmp as $v){
-                $v['img'] = (new \yii\db\Query())
+                $v['img'] = Yii::$app->params['imgUrl'].(new \yii\db\Query())
                     ->select('`name`')->from('book_file')->where(['id' => $v['img']])->column()[0];
                 $data['product'][$recommend[$v['is_top']]][] = $v;
             }
         }
-
 //        var_dump($data['product']);
         return $this->render($view,$data);
     }
@@ -198,7 +197,7 @@ class SiteController extends Controller
     }
 
     /**
-     * 联系我们
+     * 建议箱
      *
      * @return Response|string
      */
@@ -207,11 +206,6 @@ class SiteController extends Controller
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post())) {
             $param = Yii::$app->request->post()['ContactForm'];
-
-//            var_dump($param);exit;
-
-//            $db->createCommand('INSERT INTO book_feedback (name) VALUES (:name)', [
-//                ':name' => 'Qiaoling',])->execute();
 
             $data['fb_name'] = $param['name'];
             $data['fb_email'] = $param['email'];
@@ -243,15 +237,26 @@ class SiteController extends Controller
 
 
     /**
-     * 购物车
+     * 详情
      *
      * @return Response|string
      */
-    public function actionCart()
+    public function actionDetail()
     {
+        $get = Yii::$app->request->get()['id'];
+        if(empty($get))
+            return $this->goHome();
 
-
-        return $this->render('cart');
+        $data['data'] = (new \yii\db\Query())
+            ->select('`id`,`title`,price,sale_price,type,img,soldnum,is_top,description,inventory,page,author,press')
+            ->from('book_product')
+            ->where(['status' => 1])
+            ->where(['id' => Yii::$app->request->get()['id']])
+            ->one();
+        $data['data']['img'] = Yii::$app->params['imgUrl'].(new \yii\db\Query())
+            ->select('`name`')->from('book_file')->where(['id' => $data['data']['img']])->column()[0];
+//var_dump($data);exit;
+        return $this->render('detail',$data);
     }
 
     /**

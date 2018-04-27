@@ -11,7 +11,7 @@ $this->title();
         <?php foreach($focus as $v){ ?>
             <div class="swiper-slide">
                  <a href="<?=$v['ad_url']?>">
-                     <img class="col-lg-12" src="http://admin.lingbook.com<?=$v['img']?>" title="<?=$v['ad_name']?>" alt="<?=$v['ad_name'] ?>">
+                     <img class="col-lg-12" src="<?=$v['img']?>" title="<?=$v['ad_name']?>" alt="<?=$v['ad_name'] ?>">
                 </a>
             </div>
         <?php } ?>
@@ -19,7 +19,6 @@ $this->title();
 </div>
 
 <div class="site-index">
-
     <?php foreach($product as $k=>$v){ ?>
     <div class="border-b">
         <h3><img class="img-re" src="/images/s9_title._CB335300127_.png" /><?=$k ?></h3>
@@ -28,10 +27,10 @@ $this->title();
         <div class="row">
             <?php foreach($v as $vo){ ?>
             <div class="col-lg-2 back-f">
-                <p><img src="http://admin.lingbook.com<?=$vo['img']?>" title="<?=$vo['title']?>" style="width: 160px; height: 160px;"></p>
-                <div class="h-title"><a href="<?=$vo['id']?>" title="<?=$vo['title']?>"><?=$vo['title']?></a></div>
+                <p><a href="/?r=site/detail&id=<?=$vo['id']?>"><img src="<?=$vo['img']?>" title="<?=$vo['title']?>" style="width: 160px; height: 160px;"></a></p>
+                <div class="h-title"><a href="/?r=site/detail&id=<?=$vo['id']?>"><?=$vo['title']?></a></div>
                 <div class="price-t">价格：<?=$vo['price']?>元</div>
-                <div class="cart-t"><a href="?r=cart/index/pid=<?=$vo['id']?>&ptype=<?=$vo['type']?>" target="_blank">放入购物车</a></div>
+                <div class="cart-t"><a href="?r=cart/index&id=<?=$vo['id']?>&ptype=<?=$vo['type']?>" target="_blank">放入购物车</a></div>
             </div>
             <?php } ?>
         </div>

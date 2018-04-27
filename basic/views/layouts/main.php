@@ -10,6 +10,9 @@ use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
 AppAsset::register($this);
+
+$session = \Yii::$app->session;
+$data = $session->get('session_username');
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -25,10 +28,14 @@ AppAsset::register($this);
     <meta name="description" content="小巧玲珑书吧-全球最大中文网上书店,专业提供小说传记,青春文学,成功励志,投资理财等各品类图书畅销榜最新报价、促销、评论信息,引领最新网上购书体验!">
 
     <link rel="shortcut icon" href="/images/timg.jpg"/>
+    <link rel="Stylesheet" type="text/css" href="/css/header.css">
+    <link rel="Stylesheet" type="text/css" href="/css/style.css">
     <link rel="stylesheet" type="text/css" href="/css/theme_1.css">
     <link rel="Stylesheet" type="text/css" href="/css/home.css">
     <link rel="Stylesheet" type="text/css" href="/css/index.css">
-    <link rel="Stylesheet" type="text/css" href="/css/header.css">
+    <link rel="Stylesheet" type="text/css" href="/css/win_login.css">
+    <link rel="Stylesheet" type="text/css" href="/css/shopping_cart_new.css">
+
     <link rel="stylesheet" href="/css/swiper-4.2.2.min.css">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
@@ -57,7 +64,7 @@ AppAsset::register($this);
                                     ['label' => '成为书吧的一员', 'url' => ['/site/register']]:"",
                                 Yii::$app->user->isGuest ?
                                     ['label' => '登录', 'url' => ['/site/login']] :
-                                    ['label' => '退出 (' . Yii::$app->user->identity->username . ')',
+                                    ['label' => '退出 (' . $data['username'] . ')',
                                         'url' => ['/site/logout'],
                                         'linkOptions' => ['data-method' => 'post']],
                                     ['label' => '小说投稿', 'url' => ['/site/index']],
@@ -78,7 +85,7 @@ AppAsset::register($this);
         <div style="position:relative;" class="logo_line_out">
             <div class="logo_line" dd_name="搜索框">
                 <div class="logo">
-                    <img src="/images/logo1.png">
+                    <a href="http://www.lingbook.com"><img src="/images/logo1.png"></a>
                 </div>
                 <div class="search">
                     <form action="#" name="searchform" id="form_search_new" onsubmit="return searchsubmit();" method="GET">
