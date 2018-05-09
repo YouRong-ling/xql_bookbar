@@ -25,5 +25,5 @@ function tab($step = 1, $string = ' ', $size = 4)
 
 function cTime($data)
 {
-    return date('Y-m-d H:i:s',$data);
+    return $data ? date('Y-m-d H:i:s',$data) : '--';
 }

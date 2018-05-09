@@ -101,14 +101,16 @@ class SiteController extends Controller
 //        var_dump($recommend);
 
         //模块 -》 商品
+        $param['status'] = 1;
+        $param['isdelete'] = 0;
         $tmp = (new \yii\db\Query())
             ->select('`id`,`title`,price,sale_price,type,img,soldnum,is_top')
             ->from('book_product')
-            ->where(['status' => 1])
             ->where($param)
             ->orderBy('is_top desc')
 //            ->limit(10)
             ->all();
+//        var_dump($param);exit;
         $data['product'] = [];
         if($tmp){
             foreach($tmp as $v){
@@ -172,7 +174,7 @@ class SiteController extends Controller
             $data['email'] = $param['email'];
             $data['reg_ip'] = $_SERVER['SERVER_ADDR'];
             $data['reg_time'] = time();
-            $data['login'] = 1;
+            $data['login'] = 0;
             $data['last_login_ip'] = $_SERVER['SERVER_ADDR'];
             $data['last_login_time'] = time();
             Yii::$app->db->createCommand()->insert('book_user', $data)->execute();

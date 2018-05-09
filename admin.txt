@@ -1,0 +1,8 @@
+http://www.lingbook.com
+
+http://admin.lingbook.com
+
+环境：apache php  mysql
+
+后台账号  admin   123456
+

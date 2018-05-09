@@ -103,7 +103,7 @@ $data = $session->get('session_username');
                     <a href="#" class="search_advs" name="ddnav_adv_s" dd_name="高级搜索">高级搜索</a>
                 </div>
                 <div id="suggest_key" class="suggest_key" style="display:none;"></div>
-                <div class="ddnew_cart"><a name="购物车" href="?r=site/cart" dd_name="购物车"><i class="icon_card"></i>购物车<b id="cart_items_count">0</b></a></div>
+                <div class="ddnew_cart"><a name="购物车" href="?r=cart/shopping" dd_name="购物车"><i class="icon_card"></i>购物车<b id="cart_items_count">0</b></a></div>
                 <div class="ddnew_order">
                     <a target="_blank" href="?r=site/order" name="我的订单" dd_name="我的订单" rel="nofollow">我的订单<b id="unpaid_num" style="color:#ff2832;font:bold 12px Arial;"></b></a>
                 </div>
